@@ -17,9 +17,10 @@ class BackendController {
     
     private var encoder = JSONEncoder()
     private var decoder = JSONDecoder()
-    
+    var dataLoader: DataLoader?
     private var token: Token?
     
-    let bgContext = CoreDataStack.shared.container.newBackgroundContext()
-    
+    init(dataLoader: DataLoader = URLSession.shared) {
+        self.dataLoader = dataLoader
+    }
 }
