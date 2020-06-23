@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B13280624A266C200D78C4A /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1327FC24A266C200D78C4A /* CoreDataStack.swift */; };
+		2B13280824A266C200D78C4A /* Reminder+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1327FF24A266C200D78C4A /* Reminder+Convenience.swift */; };
+		2B13280924A266C200D78C4A /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B13280024A266C200D78C4A /* FetchedResultsController.swift */; };
+		2B13280A24A266C200D78C4A /* Student+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B13280124A266C200D78C4A /* Student+Convenience.swift */; };
+		2B13280B24A266C200D78C4A /* BetterProfessor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2B13280224A266C200D78C4A /* BetterProfessor.xcdatamodeld */; };
+		2B13281A24A267EE00D78C4A /* Students.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B13281924A267EE00D78C4A /* Students.storyboard */; };
 		3F5B512624A115E4007C0563 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B512524A115E4007C0563 /* AppDelegate.swift */; };
 		3F5B512824A115E4007C0563 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B512724A115E4007C0563 /* SceneDelegate.swift */; };
 		3F5B512D24A115E4007C0563 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F5B512B24A115E4007C0563 /* Main.storyboard */; };
@@ -19,6 +25,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B1327FC24A266C200D78C4A /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		2B1327FF24A266C200D78C4A /* Reminder+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reminder+Convenience.swift"; sourceTree = "<group>"; };
+		2B13280024A266C200D78C4A /* FetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsController.swift; sourceTree = "<group>"; };
+		2B13280124A266C200D78C4A /* Student+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Student+Convenience.swift"; sourceTree = "<group>"; };
+		2B13280324A266C200D78C4A /* BetterProfessor.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BetterProfessor.xcdatamodel; sourceTree = "<group>"; };
+		2B13280E24A267C200D78C4A /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		2B13281024A267C200D78C4A /* Student.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Student.xcdatamodel; sourceTree = "<group>"; };
+		2B13281124A267C200D78C4A /* Reminder+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+Convenience.swift"; sourceTree = "<group>"; };
+		2B13281224A267C200D78C4A /* FetchedResultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResultsController.swift; sourceTree = "<group>"; };
+		2B13281324A267C200D78C4A /* Student+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+Convenience.swift"; sourceTree = "<group>"; };
+		2B13281524A267C200D78C4A /* BetterProfessor.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BetterProfessor.xcdatamodel; sourceTree = "<group>"; };
+		2B13281724A267C200D78C4A /* Reminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Reminder.xcdatamodel; sourceTree = "<group>"; };
+		2B13281924A267EE00D78C4A /* Students.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Students.storyboard; sourceTree = "<group>"; };
 		3F5B512224A115E4007C0563 /* BetterProfessor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterProfessor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F5B512524A115E4007C0563 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F5B512724A115E4007C0563 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +62,73 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B1327F824A2665600D78C4A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3F5B512524A115E4007C0563 /* AppDelegate.swift */,
+				3F5B512724A115E4007C0563 /* SceneDelegate.swift */,
+				3F5B512E24A115E9007C0563 /* Assets.xcassets */,
+				3F5B513024A115E9007C0563 /* LaunchScreen.storyboard */,
+				3F5B513324A115E9007C0563 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2B1327F924A2666B00D78C4A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2B13280D24A267C200D78C4A /* CoreData */,
+				3F5B513924A150A7007C0563 /* User.swift */,
+				3F5B513D24A1553E007C0563 /* Token.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2B1327FA24A2667700D78C4A /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				3F5B513F24A155D8007C0563 /* DataLoader.swift */,
+				3F5B513B24A15471007C0563 /* BackendController.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		2B1327FB24A266C200D78C4A /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				2B1327FC24A266C200D78C4A /* CoreDataStack.swift */,
+				2B13280024A266C200D78C4A /* FetchedResultsController.swift */,
+				2B1327FF24A266C200D78C4A /* Reminder+Convenience.swift */,
+				2B13280124A266C200D78C4A /* Student+Convenience.swift */,
+				2B13280224A266C200D78C4A /* BetterProfessor.xcdatamodeld */,
+			);
+			name = CoreData;
+			path = ../../../../../../../Downloads/BetterProfessor/BetterProfessor/CoreData;
+			sourceTree = "<group>";
+		};
+		2B13280D24A267C200D78C4A /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				2B13280E24A267C200D78C4A /* CoreDataStack.swift */,
+				2B13280F24A267C200D78C4A /* Student.xcdatamodeld */,
+				2B13281124A267C200D78C4A /* Reminder+Convenience.swift */,
+				2B13281224A267C200D78C4A /* FetchedResultsController.swift */,
+				2B13281324A267C200D78C4A /* Student+Convenience.swift */,
+				2B13281424A267C200D78C4A /* BetterProfessor.xcdatamodeld */,
+				2B13281624A267C200D78C4A /* Reminder.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		2B13281824A267DA00D78C4A /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				3F5B512B24A115E4007C0563 /* Main.storyboard */,
+				2B13281924A267EE00D78C4A /* Students.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		3F5B511924A115E4007C0563 = {
 			isa = PBXGroup;
 			children = (
@@ -62,16 +148,11 @@
 		3F5B512424A115E4007C0563 /* BetterProfessor */ = {
 			isa = PBXGroup;
 			children = (
-				3F5B512524A115E4007C0563 /* AppDelegate.swift */,
-				3F5B512724A115E4007C0563 /* SceneDelegate.swift */,
-				3F5B513924A150A7007C0563 /* User.swift */,
-				3F5B513D24A1553E007C0563 /* Token.swift */,
-				3F5B513F24A155D8007C0563 /* DataLoader.swift */,
-				3F5B513B24A15471007C0563 /* BackendController.swift */,
-				3F5B512B24A115E4007C0563 /* Main.storyboard */,
-				3F5B512E24A115E9007C0563 /* Assets.xcassets */,
-				3F5B513024A115E9007C0563 /* LaunchScreen.storyboard */,
-				3F5B513324A115E9007C0563 /* Info.plist */,
+				2B13281824A267DA00D78C4A /* Storyboards */,
+				2B1327FB24A266C200D78C4A /* CoreData */,
+				2B1327FA24A2667700D78C4A /* Networking */,
+				2B1327F924A2666B00D78C4A /* Models */,
+				2B1327F824A2665600D78C4A /* Resources */,
 			);
 			path = BetterProfessor;
 			sourceTree = "<group>";
@@ -135,6 +216,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B13281A24A267EE00D78C4A /* Students.storyboard in Resources */,
 				3F5B513224A115E9007C0563 /* LaunchScreen.storyboard in Resources */,
 				3F5B512F24A115E9007C0563 /* Assets.xcassets in Resources */,
 				3F5B512D24A115E4007C0563 /* Main.storyboard in Resources */,
@@ -168,11 +250,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B13280624A266C200D78C4A /* CoreDataStack.swift in Sources */,
+				2B13280A24A266C200D78C4A /* Student+Convenience.swift in Sources */,
 				3F5B512624A115E4007C0563 /* AppDelegate.swift in Sources */,
 				3F5B513E24A1553E007C0563 /* Token.swift in Sources */,
+				2B13280824A266C200D78C4A /* Reminder+Convenience.swift in Sources */,
+				2B13280B24A266C200D78C4A /* BetterProfessor.xcdatamodeld in Sources */,
 				3F5B514024A155D8007C0563 /* DataLoader.swift in Sources */,
 				3F5B512824A115E4007C0563 /* SceneDelegate.swift in Sources */,
 				3F5B513C24A15471007C0563 /* BackendController.swift in Sources */,
+				2B13280924A266C200D78C4A /* FetchedResultsController.swift in Sources */,
 				3F5B513A24A150A7007C0563 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,7 +406,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MFBD923VWU;
-				INFOPLIST_FILE = BetterProfessor/Info.plist;
+				INFOPLIST_FILE = BetterProfessor/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -337,7 +424,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MFBD923VWU;
-				INFOPLIST_FILE = BetterProfessor/Info.plist;
+				INFOPLIST_FILE = BetterProfessor/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -371,6 +458,49 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2B13280224A266C200D78C4A /* BetterProfessor.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2B13280324A266C200D78C4A /* BetterProfessor.xcdatamodel */,
+			);
+			currentVersion = 2B13280324A266C200D78C4A /* BetterProfessor.xcdatamodel */;
+			path = BetterProfessor.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		2B13280F24A267C200D78C4A /* Student.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2B13281024A267C200D78C4A /* Student.xcdatamodel */,
+			);
+			currentVersion = 2B13281024A267C200D78C4A /* Student.xcdatamodel */;
+			path = Student.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		2B13281424A267C200D78C4A /* BetterProfessor.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2B13281524A267C200D78C4A /* BetterProfessor.xcdatamodel */,
+			);
+			currentVersion = 2B13281524A267C200D78C4A /* BetterProfessor.xcdatamodel */;
+			path = BetterProfessor.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		2B13281624A267C200D78C4A /* Reminder.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2B13281724A267C200D78C4A /* Reminder.xcdatamodel */,
+			);
+			currentVersion = 2B13281724A267C200D78C4A /* Reminder.xcdatamodel */;
+			path = Reminder.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3F5B511A24A115E4007C0563 /* Project object */;
 }
