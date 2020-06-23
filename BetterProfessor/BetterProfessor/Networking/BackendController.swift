@@ -11,7 +11,7 @@ import CoreData
 
 class BackendController {
     
-    private let baseURL = URL(string: "https://nodeprojectone.herokuapp.com/")!
+    private let baseURL = URL(string: "https://betterprofessoruni.herokuapp.com")!
     
     static let shared = BackendController()
     

@@ -11,10 +11,10 @@ import CoreData
 
 extension Student {
     @discardableResult convenience init(name: String,
-                                        id: Int64,
+                                        studentID: Int64,
                                         context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         self.init(context: context)
         self.name = name
-        self.id = id
+        self.studentID = studentID
     }
 }

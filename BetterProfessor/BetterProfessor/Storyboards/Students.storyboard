@@ -194,7 +194,7 @@
         <!--Navigation Controller-->
         <scene sceneID="hgb-ac-Lhd">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YS1-oy-luT" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="YS1-oy-luT" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Smo-Oe-Kip"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0wU-7J-hJD">
