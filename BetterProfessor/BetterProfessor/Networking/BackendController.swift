@@ -209,10 +209,16 @@ class BackendController {
               }
           }
     
+    func forceLoadInstructorStudents(completion: @escaping (Bool, Error?) -> Void) {
+           loadInstructorStudent(completion: { isEmpty, error in
+               completion(isEmpty, error)
+           })
+       }
+    
     private func update(student: Student, with rep: StudentRepresentation) {
         student.name = rep.name
      }
-    
+
     private func jsonFromDict(username: String, password: String) throws -> Data? {
            var dic: [String: String] = [:]
            dic["username"] = username
