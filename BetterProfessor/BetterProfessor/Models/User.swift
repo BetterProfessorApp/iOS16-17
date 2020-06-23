@@ -13,13 +13,16 @@ struct User: Codable {
     var id: Int64?
     var username: String
     var password: String
-    var department: String
+    var department: String?
     
     enum CodingKeys: String, CodingKey {
         case id
         case username
         case password
         case department
+
+        case session
+        case user
     }
     
       func encode(to encoder: Encoder) throws {
@@ -28,22 +31,22 @@ struct User: Codable {
         try container.encode(password, forKey: .password)
         try container.encode(department, forKey: .department)
     }
-    
+
     init(username: String, password: String, department: String, id: Int64? = nil) {
         self.id = id
         self.username = username
         self.password = password
         self.department = department
     }
-    
+
      init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let decodingID = try container.decode(Int64.self, forKey: .id)
-        id = Int64(decodingID)
-        username = try container.decode(String.self, forKey: .username)
-        password = try container.decode(String.self, forKey: .password)
-        department = try container.decode(String.self, forKey: .department)
+        let sessionDictionary = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .session)
+        let userDictionary = try sessionDictionary.nestedContainer(keyedBy: CodingKeys.self, forKey: .user)
+
+        id = try userDictionary.decode(Int64.self, forKey: .id)
+        username = try userDictionary.decode(String.self, forKey: .username)
+        password = try userDictionary.decode(String.self, forKey: .password)
+        department = nil
     }
-    
-    
 }
