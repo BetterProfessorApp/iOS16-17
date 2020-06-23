@@ -77,12 +77,12 @@ class BackendController {
         }
     
     func signIn(username: String, password: String, completion: @escaping (Bool) -> Void) {
-        
+
         let requestURL = baseURL.appendingPathComponent(EndPoints.login.rawValue)
         var request = URLRequest(url: requestURL)
         request.httpMethod = Method.post.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+
         do {
               // Try to create a JSON from the passaed in parameters, and embedding it into requestHTTPBody.
             let jsonData = try jsonFromDict(username: username, password: password)
@@ -97,7 +97,7 @@ class BackendController {
                 completion(self.isSignedIn)
                 return
             }
-            
+
             guard let data = data else {
                            NSLog("Invalid data received while loggin in.")
                            completion(self.isSignedIn)
@@ -125,7 +125,7 @@ class BackendController {
             return
         }
         
-        let requestURL = baseURL.appendingPathComponent("\(EndPoints.students.rawValue)")
+        let requestURL = baseURL.appendingPathComponent("\(EndPoints.students.rawValue)").appendingPathComponent("\(userID)/students")
         var request = URLRequest(url: requestURL)
         request.httpMethod = Method.get.rawValue
         request.setValue(token.token, forHTTPHeaderField: "Authorization")
@@ -149,7 +149,7 @@ class BackendController {
                           let decodedStudent = try self.decoder.decode([StudentRepresentation].self, from: data)
                           // Check if the user has no student. And if so return right here.
                           if decodedStudent.isEmpty {
-                              NSLog("User has no course in the database.")
+                              NSLog("User has no Student in the database.")
                               completion(true, nil)
                               return
                           }
@@ -166,7 +166,7 @@ class BackendController {
                                 self.update(student: foundStudent, with: student)
                                   // Check if student has already been added.
                                   if self.instructorStudent.first(where: { $0 == foundStudent }) != nil {
-                                      NSLog("Post already added to user's course.")
+                                      NSLog("Student already added to user's course.")
                                   } else {
                                       self.instructorStudent.append(foundStudent)
                                   }
@@ -174,7 +174,7 @@ class BackendController {
                                   //                             If the student isn't in core data, add it.
                                   if let newStudent = Student(representation: student, context: self.bgContext) {
                                       if self.instructorStudent.first(where: { $0 == newStudent }) != nil {
-                                          NSLog("Post already added to user's course.")
+                                          NSLog("Student already added to user's course.")
                                       } else {
                                           self.instructorStudent.append(newStudent)
                                       }
@@ -183,7 +183,7 @@ class BackendController {
                               }
                           }
                       } catch {
-                          NSLog("Error Decoding course, Fetching from Coredata: \(error)")
+                          NSLog("Error Decoding Student, Fetching from Coredata: \(error)")
                           completion(false, error)
                       }
                   }
@@ -256,7 +256,7 @@ class BackendController {
       private enum EndPoints: String {
           case register = "api/auth/register"
           case login = "api/auth/login"
-        case students = "/api/users/teacher/:id/students"
+        case students = "/api/users/teacher/"
       }
     
       func injectToken(_ token: String) {
