@@ -10,11 +10,22 @@ import Foundation
 import CoreData
 
 extension Student {
-    @discardableResult convenience init(name: String,
-                                        studentID: Int64,
+    @discardableResult convenience init(id: Int64,
+                                        name: String,
                                         context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         self.init(context: context)
+         self.id = id
         self.name = name
-        self.studentID = studentID
+    }
+    
+    @discardableResult convenience init?(representation: StudentRepresentation,
+                                            context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
+
+           guard let id = representation.id else {
+               NSLog("Representation passed in with invalid id")
+               return nil
+           }
+        self.init(id: id,
+                  name: representation.name)
     }
 }
