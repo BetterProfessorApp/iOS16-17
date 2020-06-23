@@ -38,6 +38,8 @@ class StudentTableViewController: UIViewController {
 
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.layer.borderColor = UIColor.lightGray.cgColor
+        tableView.layer.borderWidth = 1
         studentFetchedResultsController.delegate = self
 
         fetchStudents()
@@ -114,6 +116,15 @@ class StudentTableViewController: UIViewController {
 }
 
 extension StudentTableViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         studentFetchedResultsController.fetchedObjects?.count ?? 0
     }
