@@ -9,12 +9,12 @@
 import Foundation
 
 struct User: Codable {
-    
+
     var id: Int64?
     var username: String
     var password: String
     var department: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case username
@@ -24,7 +24,7 @@ struct User: Codable {
         case session
         case user
     }
-    
+
       func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(username, forKey: .username)

@@ -14,7 +14,9 @@ import UIKit
     let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
     let context = CoreDataStack.shared.mainContext
-    let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: "student", cacheName: nil)
+    let frc = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                         managedObjectContext: context,
+                                         sectionNameKeyPath: "student", cacheName: nil)
 //    frc.delegate = self
     do {
         try frc.performFetch()

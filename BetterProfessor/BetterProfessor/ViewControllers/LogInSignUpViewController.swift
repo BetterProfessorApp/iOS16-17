@@ -38,7 +38,7 @@ class LogInSignUpViewController: UIViewController {
             confirmPasswordTextField.isHidden = false
             emailTextField.isHidden = false
             departmentTextField.isHidden = false
-            
+
             logInSignUpButton.setTitle("Sign Up", for: .normal)
         default:
             confirmPasswordTextField.isHidden = true
@@ -62,19 +62,14 @@ class LogInSignUpViewController: UIViewController {
             self.logIn()
         }
     }
-    
     func updateTap() {
            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
            view.addGestureRecognizer(tapGesture)
        }
-       
        @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
            print("tap")
-           
            view.endEditing(true)
-           
-           switch(tapGesture.state) {
-               
+        switch(tapGesture.state) {
            case .ended:
                print("tapped again")
            default:

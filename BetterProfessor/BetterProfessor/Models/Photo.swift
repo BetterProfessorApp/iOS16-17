@@ -6,11 +6,8 @@
 //  Copyright © 2020 Bhawnish Kumar. All rights reserved.
 //
 
-
 import Foundation
 
-struct Photo: Equatable {
+struct Photo: Equatable, Codable {
     var imageData: Data
-  
-   
 }

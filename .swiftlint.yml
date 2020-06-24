@@ -43,7 +43,6 @@ opt_in_rules:
   - modifier_order
   - multiline_arguments
   - multiline_parameters
-  - operator_usage_whitespace
   - overridden_super_call
   - private_outlet
   - prohibited_super_call
@@ -81,4 +80,3 @@ vertical_whitespace:
   max_empty_lines: 2
 trailing_whitespace:
   ignores_empty_lines: true
-

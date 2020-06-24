@@ -17,7 +17,7 @@ extension Student {
          self.id = id
         self.name = name
     }
-    
+
     @discardableResult convenience init?(representation: StudentRepresentation,
                                             context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
 

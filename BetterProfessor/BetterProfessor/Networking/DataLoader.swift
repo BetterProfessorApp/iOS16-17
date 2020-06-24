@@ -9,7 +9,6 @@
 import Foundation
 
 protocol DataLoader {
-    
     func loadData(from request: URLRequest, completion: @escaping(Data?, URLResponse?, Error?) -> Void)
     func loadData(from url: URL, completion: @escaping(Data?, URLResponse?, Error?) -> Void)
 }
@@ -20,7 +19,7 @@ extension URLSession: DataLoader {
     func loadData(from request: URLRequest, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
         // Create a DataTask with the request:
         // - An URLRequest can be built up to contain headers and encoded data in the body.
-        
+
         // We use this when we want to send data to the server
         dataTask(with: request) { data, response, error in
             // We can choose to handle the usual checking for data or error in here.
@@ -30,12 +29,12 @@ extension URLSession: DataLoader {
             completion(data, response, error)
         }.resume()
     }
-    
+
     // Create a DataTask with just an URL: This is good if all we care about is pinging the server without any data.
     func loadData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
         dataTask(with: url) { data, response, error in
             completion(data, response, error)
         }.resume()
     }
-    
+
 }

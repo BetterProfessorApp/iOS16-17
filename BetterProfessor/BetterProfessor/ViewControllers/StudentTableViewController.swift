@@ -11,7 +11,6 @@ import CoreData
 
 class StudentTableViewController: UIViewController {
 
-
     let photoController = PhotoController()
     // MARK: - Properties
     var studentFetchedResultsController: NSFetchedResultsController<Student>!
@@ -81,7 +80,6 @@ class StudentTableViewController: UIViewController {
                }
            }
        }
-    
 
     private func createStudent() {
         let alert = UIAlertController(title: "Create Student", message: nil, preferredStyle: .alert)
@@ -125,24 +123,28 @@ class StudentTableViewController: UIViewController {
     @IBAction func createStudent(_ sender: Any) {
         self.createStudent()
     }
-    
-    
 
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
+          switch segue.identifier {
+
+             case "addPhotoSegue":
+
+                 guard let destinationVC = segue.destination as? PhotoDetailViewController,
+                    let indexPath = tableView.indexPathsForSelectedRows?.first else { return }
+                 destinationVC.modalPresentationStyle = .fullScreen
+                 destinationVC.photoController = photoController
+             default:
+                 break
+             }
+    }
 }
 
 extension StudentTableViewController: UITableViewDelegate, UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
@@ -150,18 +152,18 @@ extension StudentTableViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentFetchedResultsController.sections?[section].numberOfObjects ?? 0
+                return studentFetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "StudentCell", for: indexPath) as? StudentTableViewCell else { return UITableViewCell() }
 
         cell.student = studentFetchedResultsController.object(at: indexPath)
-
         return cell
     }
+    
 }
 
 extension StudentTableViewController: NSFetchedResultsControllerDelegate {
@@ -221,4 +223,3 @@ extension StudentTableViewController: UISearchBarDelegate, UISearchDisplayDelega
     tableView.reloadData()
   }
 }
-

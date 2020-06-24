@@ -10,9 +10,9 @@ import Foundation
 import CoreData
 
 class BackendController {
-    
+
     private let baseURL = URL(string: "https://betterprofessoruni.herokuapp.com")!
-    
+
     static let shared = BackendController()
 
     private var encoder = JSONEncoder()
@@ -29,14 +29,13 @@ class BackendController {
         return token != nil
 
     }
-   
 
     var userID: Int64? {
         didSet {
             loadInstructorStudent()
         }
     }
-    
+
     func signOut() {
           // All we check to see if we're logged in is whether or not we have a token.
           // Therefore all we need to do to log out, is get rid of our token.
@@ -87,7 +86,7 @@ class BackendController {
             completion(true, nil, nil)
         }
     }
-    
+
     func signIn(username: String, password: String, completion: @escaping (Bool) -> Void) {
 
         let requestURL = baseURL.appendingPathComponent(EndPoints.login.rawValue)
@@ -120,10 +119,10 @@ class BackendController {
                 do {
                     let decodedUser = try self.decoder.decode(User.self, from: data)
                     self.userID = decodedUser.id
-                    NSLog("⭐️ \(self.userID)")
+                    NSLog("⭐️ \(String(describing: self.userID))")
                     let tokenResult = try self.decoder.decode(Token.self, from: data)
                     self.token = tokenResult
-                    NSLog("✅ \(self.token)")
+                    NSLog("✅ \(String(describing: self.token))")
                     completion(self.isSignedIn)
                 } catch {
                     NSLog("Error in catching the token: \(error)")
@@ -143,7 +142,7 @@ class BackendController {
         var request = URLRequest(url: requestURL)
         request.httpMethod = Method.get.rawValue
         request.setValue(token.token, forHTTPHeaderField: "Authorization")
-        
+
         dataLoader?.loadData(from: request) { data, _, error in
             if let error = error {
                 NSLog("Error fetching logged in user's course : \(error)")
@@ -255,7 +254,7 @@ class BackendController {
        This method takes care of not allowing for duplicates, and updates existing students.
        - Call this method after user successfully logs in to populate the table for the user.
        */
-    
+
     func syncStudent(completion: @escaping (Error?) -> Void) {
         var representations: [StudentRepresentation] = []
         do {
@@ -279,8 +278,8 @@ class BackendController {
                         guard let id = student.id else { return }
 
                         if self.cache.value(for: id) != nil {
-                            let cachedPost = self.cache.value(for: id)!
-                            self.update(student: cachedPost, with: student)
+                            let cacheStudent = self.cache.value(for: id)!
+                            self.update(student: cacheStudent, with: student)
                         } else {
                             do {
                                 try self.saveStudent(by: id, from: student)
@@ -298,7 +297,7 @@ class BackendController {
             completion(error)
         }
     }
-    
+
     func fetchAllStudents(completion: @escaping ([StudentRepresentation]?, Error?) -> Void) throws {
 
            // If there's no token, user isn't authorized. Throw custom error.
@@ -369,8 +368,54 @@ class BackendController {
             completion(true, nil)
         })
     }
+    
+      func deleteStudent(student: Student, completion: @escaping (Bool?, Error?) -> Void) {
+            guard let id = userID,
+                let token = token else {
+                    completion(nil, ProfessorError.noAuth("User not logged in."))
+                    return
+            }
+            // Our only DELETE endpoint utilizes query parameters.
+            // Must use a new URL to construct commponents
+
+        var requestURL = URLComponents(string: "https://betterprofessoruni.herokuapp.com/api/users/teacher/\(id)/students/\(student.id)")!
+           
+
+            var request = URLRequest(url: requestURL.url!)
+            request.httpMethod = Method.delete.rawValue
+            request.setValue(token.token, forHTTPHeaderField: "Authorization")
+
+            dataLoader?.loadData(from: request, completion: { data, _, error in
+                if let error = error {
+                    NSLog("Error from server when attempting to delete. : \(error)")
+                    completion(nil, error)
+                    return
+                }
+
+                guard let data = data else {
+                    NSLog("Error unwrapping data sent form server: \(ProfessorError.badData("Bad data received from server after deleting student."))")
+                    completion(nil, ProfessorError.badData("Bad data from server when deleting."))
+                    return
+                }
+
+                var success: Bool = false
+
+                do {
+                    let response = try self.decoder.decode(Int.self, from: data)
+                    success = response == 1 ? true : false
+                    if success { self.bgContext.delete(student) }
+                    completion(success, nil)
+                } catch {
+                    NSLog("Error decoding response from server after deleting: \(error)")
+                    completion(nil, error)
+                    return
+                }
+
+            })
+        }
+
+
     private func populateCache() {
-         
          // First get all existing students saved to coreData and store them in the Cache
          let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
          // Do this synchronously in the background queue, so that it can't be used until cache is fully populated
@@ -379,7 +424,7 @@ class BackendController {
              do {
                  fetchResult = try bgContext.fetch(fetchRequest)
              } catch {
-                 NSLog("Couldn't fetch existing core data posts: \(error)")
+                 NSLog("Couldn't fetch existing core data student: \(error)")
              }
              for student in fetchResult {
                  cache.cache(value: student, for: student.id)
@@ -414,7 +459,7 @@ class BackendController {
         }
 
     }
-    
+
     private enum ProfessorError: Error {
         case noAuth(String)
         case badData(String)
@@ -426,13 +471,14 @@ class BackendController {
         case put = "PUT"
         case delete = "DELETE"
     }
-    
+
     private enum EndPoints: String {
         case register = "api/auth/register"
         case login = "api/auth/login"
         case students = "/api/users/teacher/"
+        case delete =  "/teacher/:id/students/"
     }
-    
+
     func injectToken(_ token: String) {
         let token = Token(token: token)
         self.token = token
