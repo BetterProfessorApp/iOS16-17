@@ -20,6 +20,7 @@ class BackendController {
     var dataLoader: DataLoader?
     private var token: Token?
     var instructorStudent: [Student] = []
+    var cache = Cache<Int64, Student>()
 
     let bgContext = CoreDataStack.shared.container.newBackgroundContext()
     let operationQueue = OperationQueue()
@@ -28,15 +29,26 @@ class BackendController {
         return token != nil
 
     }
+   
 
     var userID: Int64? {
         didSet {
             loadInstructorStudent()
         }
     }
+    
+    func signOut() {
+          // All we check to see if we're logged in is whether or not we have a token.
+          // Therefore all we need to do to log out, is get rid of our token.
+          self.token = nil
+          // As we've added userID and Posts, clear those out on signOut as well
+          self.userID = nil
+          self.instructorStudent = []
+      }
 
     init(dataLoader: DataLoader = URLSession.shared) {
         self.dataLoader = dataLoader
+        populateCache()
     }
 
     func signUp(username: String, password: String, department: String, completion: @escaping (Bool, URLResponse?, Error?) -> Void) {
@@ -222,6 +234,111 @@ class BackendController {
             completion(isEmpty, error)
         })
     }
+    private func saveStudent(by userID: Int64, from representation: StudentRepresentation) throws {
+          if let newStudent = Student(representation: representation, context: bgContext) {
+              let handleSaving = BlockOperation {
+                  do {
+                      // After going through the entire array, try to save context.
+                      // Make sure to do this in a separate do try catch so we know where things fail
+                      try CoreDataStack.shared.save(context: self.bgContext)
+                  } catch {
+                      NSLog("Error saving context.\(error)")
+                  }
+              }
+              operationQueue.addOperations([handleSaving], waitUntilFinished: false)
+              cache.cache(value: newStudent, for: userID)
+          }
+      }
+     // MARK: - Syncin/Load existing Student Instructions
+      /*
+       All that needs to be done to sync database to local store is call syncStudent.
+       This method takes care of not allowing for duplicates, and updates existing students.
+       - Call this method after user successfully logs in to populate the table for the user.
+       */
+    
+    func syncStudent(completion: @escaping (Error?) -> Void) {
+        var representations: [StudentRepresentation] = []
+        do {
+            try fetchAllStudents { students, error in
+                if let error = error {
+                    NSLog("Error fetching all sTUDENT to sync : \(error)")
+                    completion(error)
+                    return
+                }
+
+                guard let fetchedStudents = students else {
+                    completion(ProfessorError.badData("Student array couldn't be unwrapped"))
+                    return
+                }
+                representations = fetchedStudents
+
+                // Use this context to initialize new posts into core data.
+                self.bgContext.perform {
+                    for student in representations {
+                        // First if it's in the cache
+                        guard let id = student.id else { return }
+
+                        if self.cache.value(for: id) != nil {
+                            let cachedPost = self.cache.value(for: id)!
+                            self.update(student: cachedPost, with: student)
+                        } else {
+                            do {
+                                try self.saveStudent(by: id, from: student)
+                            } catch {
+                                completion(error)
+                                return
+                            }
+                        }
+                    }
+                }// context.perform
+                completion(nil)
+            }// Fetch closure
+
+        } catch {
+            completion(error)
+        }
+    }
+    
+    func fetchAllStudents(completion: @escaping ([StudentRepresentation]?, Error?) -> Void) throws {
+
+           // If there's no token, user isn't authorized. Throw custom error.
+           guard let token = token,
+            let id = self.userID else {
+               throw ProfessorError.noAuth("No token in controller. User isn't logged in.")
+           }
+
+            let requestURL = baseURL.appendingPathComponent(EndPoints.students.rawValue).appendingPathComponent("\(id)/students")
+           var request = URLRequest(url: requestURL)
+           request.httpMethod = Method.get.rawValue
+           request.setValue(token.token, forHTTPHeaderField: "Authorization")
+
+           dataLoader?.loadData(from: request, completion: { data, response, error in
+               // Always log the status code response from server.
+               if let response = response as? HTTPURLResponse {
+                   NSLog("Server responded with: \(response.statusCode)")
+               }
+
+               if let error = error {
+                   NSLog("Error fetching all existing students from server : \(error)")
+                   completion(nil, error)
+                   return
+               }
+
+               // use badData when unwrapping data from server.
+               guard let data = data else {
+                   completion(nil, ProfessorError.badData("Bad data received from server"))
+                   return
+               }
+
+               do {
+                   let students = try self.decoder.decode([StudentRepresentation].self, from: data)
+                   completion(students, nil)
+               } catch {
+                   NSLog("Couldn't decode array of students from server: \(error)")
+                   completion(nil, error)
+               }
+           })
+       }
 
     func createStudentForInstructor(name: String, email: String, subject: String, completion: @escaping (Bool, Error?) -> Void) {
         guard let token = token,
@@ -252,6 +369,23 @@ class BackendController {
             completion(true, nil)
         })
     }
+    private func populateCache() {
+         
+         // First get all existing students saved to coreData and store them in the Cache
+         let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
+         // Do this synchronously in the background queue, so that it can't be used until cache is fully populated
+         bgContext.performAndWait {
+             var fetchResult: [Student] = []
+             do {
+                 fetchResult = try bgContext.fetch(fetchRequest)
+             } catch {
+                 NSLog("Couldn't fetch existing core data posts: \(error)")
+             }
+             for student in fetchResult {
+                 cache.cache(value: student, for: student.id)
+             }
+         }
+     }
 
     private func update(student: Student, with rep: StudentRepresentation) {
         student.name = rep.name

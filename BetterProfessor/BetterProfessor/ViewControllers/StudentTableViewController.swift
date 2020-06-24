@@ -11,54 +11,77 @@ import CoreData
 
 class StudentTableViewController: UIViewController {
 
-    // MARK: - Properties
 
-    private var studentFetchedResultsController: NSFetchedResultsController<Student> = {
+    let photoController = PhotoController()
+    // MARK: - Properties
+    var studentFetchedResultsController: NSFetchedResultsController<Student>!
+    private func setUpFetchResultController(with predicate: NSPredicate = NSPredicate(value: true)) {
+        self.studentFetchedResultsController = nil
         let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        fetchRequest.predicate = predicate
         let context = CoreDataStack.shared.mainContext
+//        context.reset()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-    //    frc.delegate = self
+        frc.delegate = self
         do {
             try frc.performFetch()
         } catch {
             print("Error performing initial fetch inside fetchedResultsController: \(error)")
         }
-        return frc
-    }()
+        self.studentFetchedResultsController = frc
+    }
 
     // MARK: - Outlets
 
     @IBOutlet var tableView: UITableView!
-
+    @IBOutlet var searchBar: UISearchBar!
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        searchBar.delegate = self
+        searchBar(searchBar, textDidChange: "")
+        setUpFetchResultController()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.layer.borderColor = UIColor.lightGray.cgColor
         tableView.layer.borderWidth = 1
         studentFetchedResultsController.delegate = self
-
         fetchStudents()
+//        fetchStudents()
+    }
+    @IBAction func signOutTapped(_ sender: Any) {
+        BackendController.shared.signOut()
     }
 
     private func fetchStudents() {
-        BackendController.shared.forceLoadInstructorStudents { result, error in
-            if let error = error {
-                NSLog("ERROR: \(error)")
-                return
+        BackendController.shared.syncStudent { error in
+                      DispatchQueue.main.async {
+                          if let error = error {
+                              NSLog("Error trying to fetch student: \(error)")
+                          } else {
+                              self.tableView.reloadData()
+                          }
             }
-
-            if result {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-        }
+                  }
     }
+
+    private func fetchStudents1() {
+           BackendController.shared.forceLoadInstructorStudents { result, error in
+               if let error = error {
+                   NSLog("ERROR: \(error)")
+                   return
+               }
+
+               if result {
+                   DispatchQueue.main.async {
+                       self.tableView.reloadData()
+                   }
+               }
+           }
+       }
+    
 
     private func createStudent() {
         let alert = UIAlertController(title: "Create Student", message: nil, preferredStyle: .alert)
@@ -102,6 +125,9 @@ class StudentTableViewController: UIViewController {
     @IBAction func createStudent(_ sender: Any) {
         self.createStudent()
     }
+    
+    
+
 
     /*
     // MARK: - Navigation
@@ -126,13 +152,13 @@ extension StudentTableViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        studentFetchedResultsController.fetchedObjects?.count ?? 0
+        return studentFetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "StudentCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "StudentCell", for: indexPath) as? StudentTableViewCell else { return UITableViewCell() }
 
-        cell.textLabel?.text = studentFetchedResultsController.object(at: indexPath).name
+        cell.student = studentFetchedResultsController.object(at: indexPath)
 
         return cell
     }
@@ -183,3 +209,16 @@ extension StudentTableViewController: NSFetchedResultsControllerDelegate {
         }
     }
 }
+extension StudentTableViewController: UISearchBarDelegate, UISearchDisplayDelegate {
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    if !searchText.isEmpty {
+      var predicate: NSPredicate = NSPredicate()
+      predicate = NSPredicate(format: "name contains[c] '\(searchText)'")
+      setUpFetchResultController(with: predicate)
+    } else {
+      setUpFetchResultController()
+    }
+    tableView.reloadData()
+  }
+}
+

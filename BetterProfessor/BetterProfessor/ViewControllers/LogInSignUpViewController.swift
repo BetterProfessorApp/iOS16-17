@@ -27,7 +27,10 @@ class LogInSignUpViewController: UIViewController {
         super.viewDidLoad()
 
         self.updateViews()
+        updateTap()
     }
+    
+     @IBAction func unwindLoginSegue(segue: UIStoryboardSegue) { }
     
     private func updateViews() {
         switch logInTypeSegmentedControl.selectedSegmentIndex {
@@ -59,6 +62,25 @@ class LogInSignUpViewController: UIViewController {
             self.logIn()
         }
     }
+    
+    func updateTap() {
+           let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+           view.addGestureRecognizer(tapGesture)
+       }
+       
+       @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
+           print("tap")
+           
+           view.endEditing(true)
+           
+           switch(tapGesture.state) {
+               
+           case .ended:
+               print("tapped again")
+           default:
+               print("Handled other states: \(tapGesture.state)")
+           }
+       }
 
     private func signUp() {
         activityIndicator.startAnimating()
