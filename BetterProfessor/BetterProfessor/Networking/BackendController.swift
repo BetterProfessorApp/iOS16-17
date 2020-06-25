@@ -9,12 +9,15 @@
 import Foundation
 import CoreData
 
+enum NetworkError: Error {
+    case noIdentifier, otherError, noData, noDecode, noEncode, noRep
+}
 class BackendController {
 
     private let baseURL = URL(string: "https://betterprofessoruni.herokuapp.com")!
 
     static let shared = BackendController()
-
+   typealias CompletionHandler = (Result<Bool, NetworkError>) -> Void
     private var encoder = JSONEncoder()
     private lazy var decoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -374,47 +377,27 @@ class BackendController {
         })
     }
     
-    func deleteStudent(student: Student, completion: @escaping (Bool?, Error?) -> Void) {
+    func deleteEntryFromServe(student: Student, completion: @escaping CompletionHandler = { _ in }) {
         guard let id = userID,
-            let token = token else {
-                completion(nil, ProfessorError.noAuth("User not logged in."))
-                return
-        }
-        // Our only DELETE endpoint utilizes query parameters.
-        // Must use a new URL to construct commponents
-
-        var requestURL = URLComponents(string: "https://betterprofessoruni.herokuapp.com/api/users/teacher/\(id)/students/\(student.id)")!
-
-
+                         let token = token else {
+                              completion(.failure(.noIdentifier))
+                             return
+                     }
+        let requestURL = URLComponents(string: "https://betterprofessoruni.herokuapp.com/api/users/teacher/\(id)/students/\(student.id)")!
         var request = URLRequest(url: requestURL.url!)
         request.httpMethod = Method.delete.rawValue
-        request.setValue(token.token, forHTTPHeaderField: "authorization")
+        request.setValue(token.token, forHTTPHeaderField: "Authorization")
 
-        dataLoader?.loadData(from: request, completion: { data, _, error in
-            if let error = error {
-                NSLog("Error from server when attempting to delete. : \(error)")
-                completion(nil, error)
-                return
-            }
+          URLSession.shared.dataTask(with: request) { data, response, error in
+              if let error = error {
+                  NSLog("Error in getting data: \(error)")
+                  completion(.failure(.noData))
+              }
 
-            guard let data = data else {
-                NSLog("Error unwrapping data sent form server: \(ProfessorError.badData("Bad data received from server after deleting student."))")
-                completion(nil, ProfessorError.badData("Bad data from server when deleting."))
-                return
-            }
 
-            var success: Bool = false
-
-            do {
-                let response = try self.decoder.decode(Int.self, from: data)
-                success = response == 1 ? true : false
-                if success { self.bgContext.delete(student) }
-                completion(success, nil)
-            } catch {
-                NSLog("Error decoding response from server after deleting: \(error)")
-                completion(nil, error)
-                return
-            }
+              completion(.success(true))
+          }.resume()
+      }
 
         })
     }

@@ -168,6 +168,31 @@ extension StudentTableViewController: UITableViewDelegate, UITableViewDataSource
         return cell
     }
     
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+         if editingStyle == .delete {
+                          // Delete the row from the data source
+                          
+                          // TODO: expected to decode Int but found dictionary instead.
+                           let student = studentFetchedResultsController.object(at: indexPath)
+            BackendController.shared.deleteEntryFromServe(student: student) { result  in
+                                        guard let _ = try? result.get() else {
+                                            return
+                                        }
+                                        DispatchQueue.main.async {
+                                            CoreDataStack.shared.mainContext.delete(student)
+                                        
+                                        do {
+                                            try CoreDataStack.shared.mainContext.save()
+                                        } catch {
+                                            CoreDataStack.shared.mainContext.reset()
+                                            NSLog("Error saving object : \(error)")
+                                        }
+                                        }
+                                    }
+                      }
+    }
+    
 }
 
 extension StudentTableViewController: NSFetchedResultsControllerDelegate {
