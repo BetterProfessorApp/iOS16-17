@@ -28,25 +28,30 @@ class LogInSignUpViewController: UIViewController {
 
         self.updateViews()
         updateTap()
+        logInSignUpButton.layer.cornerRadius = 12
     }
     
      @IBAction func unwindLoginSegue(segue: UIStoryboardSegue) { }
     
     private func updateViews() {
-        switch logInTypeSegmentedControl.selectedSegmentIndex {
-        case 0:
-            confirmPasswordTextField.isHidden = false
-            emailTextField.isHidden = false
-            departmentTextField.isHidden = false
+        UIView.animate(withDuration: 0.4) {
+            switch self.logInTypeSegmentedControl.selectedSegmentIndex {
+                  
+                  case 0:
+                    self.confirmPasswordTextField.isHidden = false
+                    self.emailTextField.isHidden = false
+                    self.departmentTextField.isHidden = false
 
-            logInSignUpButton.setTitle("Sign Up", for: .normal)
-        default:
-            confirmPasswordTextField.isHidden = true
-            emailTextField.isHidden = true
-            departmentTextField.isHidden = true
+                    self.logInSignUpButton.setTitle("Sign Up", for: .normal)
+                  default:
+                    self.confirmPasswordTextField.isHidden = true
+                    self.emailTextField.isHidden = true
+                    self.departmentTextField.isHidden = true
 
-            logInSignUpButton.setTitle("Log In", for: .normal)
+                    self.logInSignUpButton.setTitle("Log In", for: .normal)
+                  }
         }
+      
     }
 
     @IBAction func didSwitchLogInType(_ sender: Any) {
