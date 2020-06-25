@@ -11,7 +11,7 @@ import CoreData
 
 class StudentTableViewController: UIViewController {
 
-    let photoController = PhotoController()
+   
     // MARK: - Properties
     var studentFetchedResultsController: NSFetchedResultsController<Student>!
     private func setUpFetchResultController(with predicate: NSPredicate = NSPredicate(value: true)) {
@@ -130,12 +130,6 @@ class StudentTableViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         switch segue.identifier {
-
-        case "addPhotoSegue":
-            guard let destinationVC = segue.destination as? PhotoDetailViewController,
-                let indexPath = tableView.indexPathsForSelectedRows?.first else { return }
-            destinationVC.modalPresentationStyle = .fullScreen
-            destinationVC.photoController = photoController
         case "ProjectCollectionSegue":
             guard let collectionVC = segue.destination as? ProjectCollectionViewController,
                 let indexPath = tableView.indexPathForSelectedRow else { return }

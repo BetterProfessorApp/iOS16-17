@@ -34,8 +34,8 @@ typePicker.delegate = self
         self.updateViews()
         updateTap()
         logInSignUpButton.layer.cornerRadius = 12
+        
     }
-    
      @IBAction func unwindLoginSegue(segue: UIStoryboardSegue) { }
     
     private func updateViews() {

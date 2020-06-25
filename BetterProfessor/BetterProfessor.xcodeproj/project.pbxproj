@@ -23,9 +23,7 @@
 		3F27732B24A2CBD100195192 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F27732A24A2CBD100195192 /* Cache.swift */; };
 		3F27732D24A2D91200195192 /* StudentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F27732C24A2D91200195192 /* StudentTableViewCell.swift */; };
 		3F27732F24A317A600195192 /* UIImage+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F27732E24A317A600195192 /* UIImage+Scale.swift */; };
-		3F27733124A3200E00195192 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F27733024A3200E00195192 /* Photo.swift */; };
-		3F27733324A3203300195192 /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F27733224A3203300195192 /* PhotoController.swift */; };
-		3F27733524A321DC00195192 /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F27733424A321DC00195192 /* PhotoDetailViewController.swift */; };
+		3F38FB8E24A51FDA00A4AA6F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F38FB8D24A51FDA00A4AA6F /* MessageUI.framework */; };
 		3F5B512624A115E4007C0563 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B512524A115E4007C0563 /* AppDelegate.swift */; };
 		3F5B512824A115E4007C0563 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B512724A115E4007C0563 /* SceneDelegate.swift */; };
 		3F5B512D24A115E4007C0563 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F5B512B24A115E4007C0563 /* Main.storyboard */; };
@@ -54,9 +52,7 @@
 		3F27732A24A2CBD100195192 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		3F27732C24A2D91200195192 /* StudentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTableViewCell.swift; sourceTree = "<group>"; };
 		3F27732E24A317A600195192 /* UIImage+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scale.swift"; sourceTree = "<group>"; };
-		3F27733024A3200E00195192 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
-		3F27733224A3203300195192 /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
-		3F27733424A321DC00195192 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
+		3F38FB8D24A51FDA00A4AA6F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		3F5B512224A115E4007C0563 /* BetterProfessor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterProfessor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F5B512524A115E4007C0563 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F5B512724A115E4007C0563 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F38FB8E24A51FDA00A4AA6F /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,8 +97,6 @@
 				3F5B513924A150A7007C0563 /* User.swift */,
 				3F5B513D24A1553E007C0563 /* Token.swift */,
 				3F27732824A29E3000195192 /* StudenRepresentation.swift */,
-				3F27733024A3200E00195192 /* Photo.swift */,
-				3F27733224A3203300195192 /* PhotoController.swift */,
 				2B13284824A3E94100D78C4A /* Project.swift */,
 			);
 			path = Models;
@@ -130,7 +125,6 @@
 			isa = PBXGroup;
 			children = (
 				2B13283024A26A0700D78C4A /* LogInSignUpViewController.swift */,
-				3F27733424A321DC00195192 /* PhotoDetailViewController.swift */,
 				2B13283824A2A65800D78C4A /* StudentTableViewController.swift */,
 				3F27732C24A2D91200195192 /* StudentTableViewCell.swift */,
 				3F27732E24A317A600195192 /* UIImage+Scale.swift */,
@@ -153,11 +147,20 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		3F38FB8C24A51FD900A4AA6F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3F38FB8D24A51FDA00A4AA6F /* MessageUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3F5B511924A115E4007C0563 = {
 			isa = PBXGroup;
 			children = (
 				3F5B512424A115E4007C0563 /* BetterProfessor */,
 				3F5B512324A115E4007C0563 /* Products */,
+				3F38FB8C24A51FD900A4AA6F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -277,7 +280,6 @@
 				3F27732924A29E3000195192 /* StudenRepresentation.swift in Sources */,
 				3F27732B24A2CBD100195192 /* Cache.swift in Sources */,
 				3F5B512624A115E4007C0563 /* AppDelegate.swift in Sources */,
-				3F27733324A3203300195192 /* PhotoController.swift in Sources */,
 				3F27732624A29A7700195192 /* Student+Convenience.swift in Sources */,
 				2B13285124A5067C00D78C4A /* BetterProfessor.xcdatamodeld in Sources */,
 				2B13284924A3E94100D78C4A /* Project.swift in Sources */,
@@ -290,13 +292,11 @@
 				2B13284C24A4083000D78C4A /* ProjectCollectionViewCell.swift in Sources */,
 				2B13283924A2A65800D78C4A /* StudentTableViewController.swift in Sources */,
 				3F27732524A29A7500195192 /* Reminder+Convenience.swift in Sources */,
-				3F27733124A3200E00195192 /* Photo.swift in Sources */,
 				3F5B513C24A15471007C0563 /* BackendController.swift in Sources */,
 				3F5B513A24A150A7007C0563 /* User.swift in Sources */,
 				2B13284E24A41C1500D78C4A /* ProjectCollectionViewController.swift in Sources */,
 				3F27732424A29A7300195192 /* FetchedResultsController.swift in Sources */,
 				3F27732324A29A3100195192 /* CoreDataStack.swift in Sources */,
-				3F27733524A321DC00195192 /* PhotoDetailViewController.swift in Sources */,
 				3F27732D24A2D91200195192 /* StudentTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
