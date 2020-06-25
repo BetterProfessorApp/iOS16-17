@@ -397,10 +397,9 @@ class BackendController {
 
               completion(.success(true))
           }.resume()
-      }
+        
+        }
 
-        })
-    }
 
     private func populateCache() {
         // First get all existing students saved to coreData and store them in the Cache
