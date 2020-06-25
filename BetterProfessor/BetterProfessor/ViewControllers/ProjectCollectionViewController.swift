@@ -40,7 +40,6 @@ class ProjectCollectionViewController: UICollectionViewController {
             }
 
             // We only want to display projects associated with the particular student so I filter it here
-            NSLog("\(projects)")
             for project in projects {
                 if project.studentName == student.name {
                     self.projects.append(project)

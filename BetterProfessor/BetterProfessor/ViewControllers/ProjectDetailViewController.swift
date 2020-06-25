@@ -60,6 +60,14 @@ class ProjectDetailViewController: UIViewController {
             let notes = notesTextView.text,
             let student = student else { return }
 
+        if let project = project {
+            updateProject(project: project, projectName: projectName, projectType: projectType, notes: notes, student: student)
+        } else {
+            createProject(projectName: projectName, projectType: projectType, notes: notes, student: student)
+        }
+    }
+
+    private func createProject(projectName: String, projectType: String, notes: String, student: Student) {
         // swiftlint:disable:next all
         BackendController.shared.createProject(name: projectName, studentID: "\(student.id)", projectType: projectType, dueDate: dueDatePicker.date, description: notes, completed: completedButton.isSelected) { result, error in
             if let error = error {
@@ -78,4 +86,25 @@ class ProjectDetailViewController: UIViewController {
 
         navigationController?.popViewController(animated: true)
     }
+
+    private func updateProject(project: Project, projectName: String, projectType: String, notes: String, student: Student) {
+        // swiftlint:disable:next all
+        BackendController.shared.updateProject(project: project, name: projectName, studentID: "\(student.id)", projectType: projectType, dueDate: dueDatePicker.date, description: notes, completed: completedButton.isSelected) { result, error in
+            if let error = error {
+                NSLog("Failed to update project with error: \(error)")
+                return
+            }
+
+            if result {
+                NSLog("Successfully updated project 🙌")
+            }
+
+            DispatchQueue.main.async {
+                self.delegate?.didCreateProject()
+            }
+        }
+
+        navigationController?.popViewController(animated: true)
+    }
 }
+
