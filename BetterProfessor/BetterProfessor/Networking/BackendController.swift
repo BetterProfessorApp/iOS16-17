@@ -448,7 +448,7 @@ func fetchAllProjects(completion: @escaping ([Project]?, Error?) -> Void) {
     })
 }
 
-func createProject(name: String, studentID: String, projectType: String, description: String, completed: Bool, completion: @escaping (Bool, Error?) -> Void) {
+    func createProject(name: String, studentID: String, projectType: String, dueDate: Date, description: String, completed: Bool, completion: @escaping (Bool, Error?) -> Void) {
     guard let token = token,
         let userID = self.userID else { return }
     
@@ -458,13 +458,19 @@ func createProject(name: String, studentID: String, projectType: String, descrip
     request.httpMethod = Method.post.rawValue
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue(token.token, forHTTPHeaderField: "authorization")
-    
+
     do {
-        let dictionary: [String: Any] = ["name": name,
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        let dateString = dateFormatter.string(from: dueDate)
+        let dictionary: [String: Any] = ["teacher_id": "\(userID)",
+                                         "project_name": name,
                                          "student_id": studentID,
                                          "project_type": projectType,
+                                         "due_date": dateString,
                                          "desc": description,
                                          "completed": completed]
+        NSLog("\(dictionary)")
         let jsonBody = try jsonFromDict(dictionary: dictionary)
         request.httpBody = jsonBody
     } catch {

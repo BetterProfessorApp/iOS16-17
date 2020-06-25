@@ -60,7 +60,8 @@ class ProjectDetailViewController: UIViewController {
             let notes = notesTextView.text,
             let student = student else { return }
 
-        BackendController.shared.createProject(name: projectName, studentID: "\(student.id)", projectType: projectType, description: notes, completed: completedButton.isSelected) { result, error in
+        // swiftlint:disable:next all
+        BackendController.shared.createProject(name: projectName, studentID: "\(student.id)", projectType: projectType, dueDate: dueDatePicker.date, description: notes, completed: completedButton.isSelected) { result, error in
             if let error = error {
                 NSLog("Failed to create project with error: \(error)")
                 return
