@@ -19,7 +19,12 @@ class BackendController {
     static let shared = BackendController()
    typealias CompletionHandler = (Result<Bool, NetworkError>) -> Void
     private var encoder = JSONEncoder()
-    private var decoder = JSONDecoder()
+    private lazy var decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
     var dataLoader: DataLoader?
     private var token: Token?
     var instructorStudent: [Student] = []
@@ -40,13 +45,13 @@ class BackendController {
     }
 
     func signOut() {
-          // All we check to see if we're logged in is whether or not we have a token.
-          // Therefore all we need to do to log out, is get rid of our token.
-          self.token = nil
-          // As we've added userID and Posts, clear those out on signOut as well
-          self.userID = nil
-          self.instructorStudent = []
-      }
+        // All we check to see if we're logged in is whether or not we have a token.
+        // Therefore all we need to do to log out, is get rid of our token.
+        self.token = nil
+        // As we've added userID and Posts, clear those out on signOut as well
+        self.userID = nil
+        self.instructorStudent = []
+    }
 
     init(dataLoader: DataLoader = URLSession.shared) {
         self.dataLoader = dataLoader
@@ -144,7 +149,7 @@ class BackendController {
         let requestURL = baseURL.appendingPathComponent("\(EndPoints.students.rawValue)").appendingPathComponent("\(id)/students")
         var request = URLRequest(url: requestURL)
         request.httpMethod = Method.get.rawValue
-        request.setValue(token.token, forHTTPHeaderField: "Authorization")
+        request.setValue(token.token, forHTTPHeaderField: "authorization")
 
         dataLoader?.loadData(from: request) { data, _, error in
             if let error = error {
@@ -237,26 +242,26 @@ class BackendController {
         })
     }
     private func saveStudent(by userID: Int64, from representation: StudentRepresentation) throws {
-          if let newStudent = Student(representation: representation, context: bgContext) {
-              let handleSaving = BlockOperation {
-                  do {
-                      // After going through the entire array, try to save context.
-                      // Make sure to do this in a separate do try catch so we know where things fail
-                      try CoreDataStack.shared.save(context: self.bgContext)
-                  } catch {
-                      NSLog("Error saving context.\(error)")
-                  }
-              }
-              operationQueue.addOperations([handleSaving], waitUntilFinished: false)
-              cache.cache(value: newStudent, for: userID)
-          }
-      }
-     // MARK: - Syncin/Load existing Student Instructions
-      /*
-       All that needs to be done to sync database to local store is call syncStudent.
-       This method takes care of not allowing for duplicates, and updates existing students.
-       - Call this method after user successfully logs in to populate the table for the user.
-       */
+        if let newStudent = Student(representation: representation, context: bgContext) {
+            let handleSaving = BlockOperation {
+                do {
+                    // After going through the entire array, try to save context.
+                    // Make sure to do this in a separate do try catch so we know where things fail
+                    try CoreDataStack.shared.save(context: self.bgContext)
+                } catch {
+                    NSLog("Error saving context.\(error)")
+                }
+            }
+            operationQueue.addOperations([handleSaving], waitUntilFinished: false)
+            cache.cache(value: newStudent, for: userID)
+        }
+    }
+    // MARK: - Syncin/Load existing Student Instructions
+    /*
+     All that needs to be done to sync database to local store is call syncStudent.
+     This method takes care of not allowing for duplicates, and updates existing students.
+     - Call this method after user successfully logs in to populate the table for the user.
+     */
 
     func syncStudent(completion: @escaping (Error?) -> Void) {
         var representations: [StudentRepresentation] = []
@@ -303,44 +308,44 @@ class BackendController {
 
     func fetchAllStudents(completion: @escaping ([StudentRepresentation]?, Error?) -> Void) throws {
 
-           // If there's no token, user isn't authorized. Throw custom error.
-           guard let token = token,
+        // If there's no token, user isn't authorized. Throw custom error.
+        guard let token = token,
             let id = self.userID else {
-               throw ProfessorError.noAuth("No token in controller. User isn't logged in.")
-           }
+                throw ProfessorError.noAuth("No token in controller. User isn't logged in.")
+        }
 
-            let requestURL = baseURL.appendingPathComponent(EndPoints.students.rawValue).appendingPathComponent("\(id)/students")
-           var request = URLRequest(url: requestURL)
-           request.httpMethod = Method.get.rawValue
-           request.setValue(token.token, forHTTPHeaderField: "Authorization")
+        let requestURL = baseURL.appendingPathComponent(EndPoints.students.rawValue).appendingPathComponent("\(id)/students")
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = Method.get.rawValue
+        request.setValue(token.token, forHTTPHeaderField: "authorization")
 
-           dataLoader?.loadData(from: request, completion: { data, response, error in
-               // Always log the status code response from server.
-               if let response = response as? HTTPURLResponse {
-                   NSLog("Server responded with: \(response.statusCode)")
-               }
+        dataLoader?.loadData(from: request, completion: { data, response, error in
+            // Always log the status code response from server.
+            if let response = response as? HTTPURLResponse {
+                NSLog("Server responded with: \(response.statusCode)")
+            }
 
-               if let error = error {
-                   NSLog("Error fetching all existing students from server : \(error)")
-                   completion(nil, error)
-                   return
-               }
+            if let error = error {
+                NSLog("Error fetching all existing students from server : \(error)")
+                completion(nil, error)
+                return
+            }
 
-               // use badData when unwrapping data from server.
-               guard let data = data else {
-                   completion(nil, ProfessorError.badData("Bad data received from server"))
-                   return
-               }
+            // use badData when unwrapping data from server.
+            guard let data = data else {
+                completion(nil, ProfessorError.badData("Bad data received from server"))
+                return
+            }
 
-               do {
-                   let students = try self.decoder.decode([StudentRepresentation].self, from: data)
-                   completion(students, nil)
-               } catch {
-                   NSLog("Couldn't decode array of students from server: \(error)")
-                   completion(nil, error)
-               }
-           })
-       }
+            do {
+                let students = try self.decoder.decode([StudentRepresentation].self, from: data)
+                completion(students, nil)
+            } catch {
+                NSLog("Couldn't decode array of students from server: \(error)")
+                completion(nil, error)
+            }
+        })
+    }
 
     func createStudentForInstructor(name: String, email: String, subject: String, completion: @escaping (Bool, Error?) -> Void) {
         guard let token = token,
@@ -349,7 +354,7 @@ class BackendController {
         var request = URLRequest(url: requestURL)
         request.httpMethod = Method.post.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue(token.token, forHTTPHeaderField: "Authorization")
+        request.setValue(token.token, forHTTPHeaderField: "authorization")
 
         do {
             let dictionary: [String: Any] = ["name": name,
@@ -394,26 +399,88 @@ class BackendController {
           }.resume()
       }
 
+        })
+    }
 
     private func populateCache() {
-         // First get all existing students saved to coreData and store them in the Cache
-         let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
-         // Do this synchronously in the background queue, so that it can't be used until cache is fully populated
-         bgContext.performAndWait {
-             var fetchResult: [Student] = []
-             do {
-                 fetchResult = try bgContext.fetch(fetchRequest)
-             } catch {
-                 NSLog("Couldn't fetch existing core data student: \(error)")
-             }
-             for student in fetchResult {
-                 cache.cache(value: student, for: student.id)
-             }
-         }
-     }
+        // First get all existing students saved to coreData and store them in the Cache
+        let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
+        // Do this synchronously in the background queue, so that it can't be used until cache is fully populated
+        bgContext.performAndWait {
+            var fetchResult: [Student] = []
+            do {
+                fetchResult = try bgContext.fetch(fetchRequest)
+            } catch {
+                NSLog("Couldn't fetch existing core data student: \(error)")
+            }
+            for student in fetchResult {
+                cache.cache(value: student, for: student.id)
+            }
+        }
+    }
 
     private func update(student: Student, with rep: StudentRepresentation) {
         student.name = rep.name
+    }
+
+    func fetchAllProjects(completion: @escaping ([Project]?, Error?) -> Void) {
+        guard let token = token,
+            let userID = self.userID else { return }
+
+        let projectURL = baseURL.appendingPathComponent("/api/users/teacher").appendingPathComponent("\(userID)").appendingPathComponent("/students/projects")
+
+        var request = URLRequest(url: projectURL)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(token.token, forHTTPHeaderField: "authorization")
+
+        dataLoader?.loadData(from: request, completion: { data, _, error in
+            if let error = error {
+                return completion(nil, error)
+            }
+
+            guard let data = data else {
+                return completion(nil, ProfessorError.badData("No data was returned"))
+            }
+
+            do {
+                let projects = try self.decoder.decode([Project].self, from: data)
+                return completion(projects, nil)
+            } catch {
+                return completion(nil, ProfessorError.badData("Could not decode data"))
+            }
+        })
+    }
+
+    func createProject(name: String, studentID: String, projectType: String, description: String, completed: Bool, completion: @escaping (Bool, Error?) -> Void) {
+        guard let token = token,
+            let userID = self.userID else { return }
+
+        let projectURL = baseURL.appendingPathComponent("/api/users/teacher").appendingPathComponent("\(userID)").appendingPathComponent("/students/projects")
+
+        var request = URLRequest(url: projectURL)
+        request.httpMethod = Method.post.rawValue
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(token.token, forHTTPHeaderField: "authorization")
+
+        do {
+            let dictionary: [String: Any] = ["name": name,
+                                             "student_id": studentID,
+                                             "project_type": projectType,
+                                             "desc": description,
+                                             "completed": completed]
+            let jsonBody = try jsonFromDict(dictionary: dictionary)
+            request.httpBody = jsonBody
+        } catch {
+            completion(false, error)
+        }
+
+        dataLoader?.loadData(from: request, completion: { _, _, error in
+            if let error = error {
+                return completion(false, error)
+            }
+
+            completion(true, nil)
+        })
     }
 
     private func jsonFromDict(dictionary: Dictionary<String, Any>) throws -> Data? {
