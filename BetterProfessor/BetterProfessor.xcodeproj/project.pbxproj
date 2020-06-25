@@ -10,6 +10,10 @@
 		2B13281A24A267EE00D78C4A /* Students.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B13281924A267EE00D78C4A /* Students.storyboard */; };
 		2B13283124A26A0700D78C4A /* LogInSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B13283024A26A0700D78C4A /* LogInSignUpViewController.swift */; };
 		2B13283924A2A65800D78C4A /* StudentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B13283824A2A65800D78C4A /* StudentTableViewController.swift */; };
+		2B13284924A3E94100D78C4A /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B13284824A3E94100D78C4A /* Project.swift */; };
+		2B13284C24A4083000D78C4A /* ProjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B13284B24A4083000D78C4A /* ProjectCollectionViewCell.swift */; };
+		2B13284E24A41C1500D78C4A /* ProjectCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B13284D24A41C1500D78C4A /* ProjectCollectionViewController.swift */; };
+		2B13285024A47CD000D78C4A /* ProjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B13284F24A47CD000D78C4A /* ProjectDetailViewController.swift */; };
 		3F27732324A29A3100195192 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B13282F24A268DC00D78C4A /* CoreDataStack.swift */; };
 		3F27732424A29A7300195192 /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B13282D24A268DC00D78C4A /* FetchedResultsController.swift */; };
 		3F27732524A29A7500195192 /* Reminder+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B13282C24A268DC00D78C4A /* Reminder+Convenience.swift */; };
@@ -42,6 +46,10 @@
 		2B13282F24A268DC00D78C4A /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		2B13283024A26A0700D78C4A /* LogInSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInSignUpViewController.swift; sourceTree = "<group>"; };
 		2B13283824A2A65800D78C4A /* StudentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTableViewController.swift; sourceTree = "<group>"; };
+		2B13284824A3E94100D78C4A /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		2B13284B24A4083000D78C4A /* ProjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewCell.swift; sourceTree = "<group>"; };
+		2B13284D24A41C1500D78C4A /* ProjectCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewController.swift; sourceTree = "<group>"; };
+		2B13284F24A47CD000D78C4A /* ProjectDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailViewController.swift; sourceTree = "<group>"; };
 		3F27732824A29E3000195192 /* StudenRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudenRepresentation.swift; sourceTree = "<group>"; };
 		3F27732A24A2CBD100195192 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		3F27732C24A2D91200195192 /* StudentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTableViewCell.swift; sourceTree = "<group>"; };
@@ -94,6 +102,7 @@
 				3F27732824A29E3000195192 /* StudenRepresentation.swift */,
 				3F27733024A3200E00195192 /* Photo.swift */,
 				3F27733224A3203300195192 /* PhotoController.swift */,
+				2B13284824A3E94100D78C4A /* Project.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -125,6 +134,9 @@
 				2B13283824A2A65800D78C4A /* StudentTableViewController.swift */,
 				3F27732C24A2D91200195192 /* StudentTableViewCell.swift */,
 				3F27732E24A317A600195192 /* UIImage+Scale.swift */,
+				2B13284D24A41C1500D78C4A /* ProjectCollectionViewController.swift */,
+				2B13284B24A4083000D78C4A /* ProjectCollectionViewCell.swift */,
+				2B13284F24A47CD000D78C4A /* ProjectDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -267,17 +279,21 @@
 				3F5B512624A115E4007C0563 /* AppDelegate.swift in Sources */,
 				3F27733324A3203300195192 /* PhotoController.swift in Sources */,
 				3F27732624A29A7700195192 /* Student+Convenience.swift in Sources */,
+				2B13284924A3E94100D78C4A /* Project.swift in Sources */,
 				3F5B513E24A1553E007C0563 /* Token.swift in Sources */,
+				2B13285024A47CD000D78C4A /* ProjectDetailViewController.swift in Sources */,
 				2B13283124A26A0700D78C4A /* LogInSignUpViewController.swift in Sources */,
 				3F27732F24A317A600195192 /* UIImage+Scale.swift in Sources */,
 				3F5B514024A155D8007C0563 /* DataLoader.swift in Sources */,
 				3F27732724A29DC000195192 /* BetterProfessor.xcdatamodeld in Sources */,
 				3F5B512824A115E4007C0563 /* SceneDelegate.swift in Sources */,
+				2B13284C24A4083000D78C4A /* ProjectCollectionViewCell.swift in Sources */,
 				2B13283924A2A65800D78C4A /* StudentTableViewController.swift in Sources */,
 				3F27732524A29A7500195192 /* Reminder+Convenience.swift in Sources */,
 				3F27733124A3200E00195192 /* Photo.swift in Sources */,
 				3F5B513C24A15471007C0563 /* BackendController.swift in Sources */,
 				3F5B513A24A150A7007C0563 /* User.swift in Sources */,
+				2B13284E24A41C1500D78C4A /* ProjectCollectionViewController.swift in Sources */,
 				3F27732424A29A7300195192 /* FetchedResultsController.swift in Sources */,
 				3F27732324A29A3100195192 /* CoreDataStack.swift in Sources */,
 				3F27733524A321DC00195192 /* PhotoDetailViewController.swift in Sources */,
