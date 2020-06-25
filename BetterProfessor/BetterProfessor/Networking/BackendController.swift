@@ -387,17 +387,19 @@ class BackendController {
         var request = URLRequest(url: requestURL.url!)
         request.httpMethod = Method.delete.rawValue
         request.setValue(token.token, forHTTPHeaderField: "Authorization")
+
+
+          URLSession.shared.dataTask(with: request) { data, response, error in
+              if let error = error {
+                  NSLog("Error in getting data: \(error)")
+                  completion(.failure(.noData))
+              }
+
+
+              completion(.success(true))
+          }.resume()
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                NSLog("Error in getting data: \(error)")
-                completion(.failure(.noData))
-            }
-            
-            
-            completion(.success(true))
-        }.resume()
-    }
+        }
 
     private func populateCache() {
         // First get all existing students saved to coreData and store them in the Cache
@@ -434,6 +436,30 @@ class BackendController {
         var dic: [String: String] = [:]
         dic["username"] = username
 
+private func update(student: Student, with rep: StudentRepresentation) {
+    student.name = rep.name
+    student.email = rep.email
+    student.subject = rep.subject
+}
+
+func fetchAllProjects(completion: @escaping ([Project]?, Error?) -> Void) {
+    guard let token = token,
+        let userID = self.userID else { return }
+    let projectURL = baseURL.appendingPathComponent("/api/users/teacher").appendingPathComponent("\(userID)").appendingPathComponent("/students/projects")
+
+    var request = URLRequest(url: projectURL)
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.setValue(token.token, forHTTPHeaderField: "authorization")
+    
+    dataLoader?.loadData(from: request, completion: { data, _, error in
+        if let error = error {
+            return completion(nil, error)
+        }
+        
+        guard let data = data else {
+            return completion(nil, ProfessorError.badData("No data was returned"))
+        }
+        
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
             return jsonData

@@ -21,11 +21,16 @@ class LogInSignUpViewController: UIViewController {
     @IBOutlet var logInSignUpButton: UIButton!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
+    var typePicker = UIPickerView()
+     var typeData = ["Choose a Department", "Computer Science", "iOS Development", "Data Science", "Web Development", "Arts", "Mathematics" ]
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+typePicker.delegate = self
+        typePicker.dataSource = self
+        typePicker.tag = 1
+        departmentTextField.inputView = typePicker
         self.updateViews()
         updateTap()
         logInSignUpButton.layer.cornerRadius = 12
@@ -158,4 +163,38 @@ class LogInSignUpViewController: UIViewController {
         endAlert.addAction(endAction)
         present(endAlert, animated: true, completion: nil)
     }
+}
+
+extension LogInSignUpViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+              return typeData.count
+      }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+              return typeData[row]
+      }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        return  departmentTextField.text = typeData[row]
+    }
+    
+    func dismissPickerView() {
+         let toolBar = UIToolbar()
+         toolBar.sizeToFit()
+         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.dismissKeyboard))
+         toolBar.setItems([doneButton], animated: false)
+         toolBar.isUserInteractionEnabled = true
+         departmentTextField.inputAccessoryView = toolBar
+
+     }
+    
+    @objc func dismissKeyboard() {
+           view.endEditing(true)
+       }
+    
+    
 }
