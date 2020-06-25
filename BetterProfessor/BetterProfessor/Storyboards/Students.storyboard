@@ -178,26 +178,40 @@
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="120"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="43" translatesAutoresizingMaskIntoConstraints="NO" id="wIf-ds-GrI">
-                                            <rect key="frame" x="18" y="18" width="204" height="84"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="ROR-t7-p25">
+                                            <rect key="frame" x="8" y="8" width="224" height="104"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Project Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yyR-r3-Zaw">
-                                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="j6v-qD-v6Q">
+                                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="73"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Project Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yyR-r3-Zaw">
+                                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="39.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Due Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ew0-f5-BpK">
+                                                            <rect key="frame" x="0.0" y="52.5" width="71.5" height="20.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="20.5" id="Wmd-KR-vq9"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="98" translatesAutoresizingMaskIntoConstraints="NO" id="PwP-SD-sPO">
-                                                    <rect key="frame" x="0.0" y="63.5" width="204" height="20.5"/>
+                                                    <rect key="frame" x="0.0" y="82" width="213.5" height="22"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Project Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Hm-7b-6DL">
-                                                            <rect key="frame" x="0.0" y="0.0" width="86.5" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="96" height="22"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VdP-nG-vv1">
-                                                            <rect key="frame" x="184.5" y="0.0" width="19.5" height="20.5"/>
+                                                            <rect key="frame" x="194" y="0.0" width="19.5" height="22"/>
                                                             <state key="normal" image="square" catalog="system"/>
                                                             <state key="selected" image="checkmark.square" catalog="system"/>
                                                         </button>
@@ -208,14 +222,17 @@
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemGray3Color" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
-                                        <constraint firstItem="wIf-ds-GrI" firstAttribute="top" secondItem="lnP-pJ-Gdk" secondAttribute="topMargin" constant="10" id="RSw-Rl-2gJ"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="wIf-ds-GrI" secondAttribute="trailing" constant="10" id="Uqi-B4-x8i"/>
-                                        <constraint firstItem="wIf-ds-GrI" firstAttribute="leading" secondItem="lnP-pJ-Gdk" secondAttribute="leadingMargin" constant="10" id="c5v-hU-Ccj"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="wIf-ds-GrI" secondAttribute="bottom" constant="10" id="iy9-97-jmb"/>
+                                        <constraint firstItem="ROR-t7-p25" firstAttribute="centerX" secondItem="lnP-pJ-Gdk" secondAttribute="centerX" id="5BE-sF-IMj"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ROR-t7-p25" secondAttribute="bottom" id="H76-mW-frN"/>
+                                        <constraint firstItem="ROR-t7-p25" firstAttribute="centerY" secondItem="lnP-pJ-Gdk" secondAttribute="centerY" id="HTr-Mk-3Sn"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="ROR-t7-p25" secondAttribute="trailing" id="Xbm-oL-qv0"/>
+                                        <constraint firstItem="ROR-t7-p25" firstAttribute="leading" secondItem="lnP-pJ-Gdk" secondAttribute="leadingMargin" id="eKd-aO-cqs"/>
+                                        <constraint firstItem="ROR-t7-p25" firstAttribute="top" secondItem="lnP-pJ-Gdk" secondAttribute="topMargin" id="nFR-JJ-FW5"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
                                     <outlet property="completedButton" destination="VdP-nG-vv1" id="QSa-T9-IOh"/>
+                                    <outlet property="dueDateLabel" destination="ew0-f5-BpK" id="404-Ic-l2Z"/>
                                     <outlet property="projectNameLabel" destination="yyR-r3-Zaw" id="djl-IN-3dv"/>
                                     <outlet property="projectTypeLabel" destination="2Hm-7b-6DL" id="SeY-fC-BEO"/>
                                     <segue destination="Pjq-Nt-LdQ" kind="show" identifier="ViewProjectSegue" id="cFV-ej-LgK"/>
