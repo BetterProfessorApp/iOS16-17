@@ -12,7 +12,7 @@ class ProjectCollectionViewController: UICollectionViewController {
 
     private let reuseIdentifier = "ProjectCell"
 
-    var studentName: String?
+    var student: Student?
     private var projects = [Project]()
 
     override func viewDidLoad() {
@@ -26,7 +26,7 @@ class ProjectCollectionViewController: UICollectionViewController {
     }
 
     private func fetchProjects() {
-        guard let studentName = studentName else { return }
+        guard let student = student else { return }
 
         BackendController.shared.fetchAllProjects { projects, error in
             if let error = error {
@@ -42,7 +42,7 @@ class ProjectCollectionViewController: UICollectionViewController {
             // We only want to display projects associated with the particular student so I filter it here
             NSLog("\(projects)")
             for project in projects {
-                if project.studentName == studentName {
+                if project.studentName == student.name {
                     self.projects.append(project)
                 }
             }
@@ -62,8 +62,11 @@ class ProjectCollectionViewController: UICollectionViewController {
                 let indexPath = collectionView.indexPath(for: cell) else { return }
 
             detailVC.project = self.projects[indexPath.row]
+            detailVC.student = self.student
         } else if segue.identifier == "AddProjectSegue" {
-            
+            guard let detailVC = segue.destination as? ProjectDetailViewController else { return }
+
+            detailVC.student = self.student
         }
     }
 
@@ -81,36 +84,10 @@ class ProjectCollectionViewController: UICollectionViewController {
     
         return cell
     }
+}
 
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
+extension ProjectCollectionViewController: ProjectDetailDelegate {
+    func didCreateProject() {
+        self.collectionView.reloadData()
     }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
 }

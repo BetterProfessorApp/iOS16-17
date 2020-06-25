@@ -140,7 +140,7 @@ class StudentTableViewController: UIViewController {
             guard let collectionVC = segue.destination as? ProjectCollectionViewController,
                 let indexPath = tableView.indexPathForSelectedRow else { return }
             let student = studentFetchedResultsController.object(at: indexPath)
-            collectionVC.studentName = student.name
+            collectionVC.student = student
         default:
             break
         }

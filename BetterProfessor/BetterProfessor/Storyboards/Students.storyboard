@@ -339,6 +339,9 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                                 <state key="normal" image="square" catalog="system"/>
                                                 <state key="selected" image="checkmark.square.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="toggleCompleteState:" destination="Pjq-Nt-LdQ" eventType="touchUpInside" id="PZA-n0-jL0"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -368,7 +371,6 @@
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vd3-9s-vZ0">
                                                 <rect key="frame" x="0.0" y="20.5" width="374" height="179"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -380,6 +382,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3kZ-Qp-GI2">
                                 <rect key="frame" x="164" y="810" width="86" height="30"/>
                                 <state key="normal" title="Save Project"/>
+                                <connections>
+                                    <action selector="saveProject:" destination="Pjq-Nt-LdQ" eventType="touchUpInside" id="46M-XA-REs"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

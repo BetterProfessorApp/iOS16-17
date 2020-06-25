@@ -475,6 +475,7 @@ class BackendController {
         let projectURL = baseURL.appendingPathComponent("/api/users/teacher").appendingPathComponent("\(userID)").appendingPathComponent("/students/projects")
 
         var request = URLRequest(url: projectURL)
+        request.httpMethod = Method.post.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(token.token, forHTTPHeaderField: "authorization")
 
@@ -490,7 +491,7 @@ class BackendController {
             completion(false, error)
         }
 
-        dataLoader?.loadData(from: request, completion: { data, _, error in
+        dataLoader?.loadData(from: request, completion: { _, _, error in
             if let error = error {
                 return completion(false, error)
             }
