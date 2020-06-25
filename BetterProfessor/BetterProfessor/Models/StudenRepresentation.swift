@@ -11,16 +11,22 @@ import Foundation
 class StudentRepresentation: Codable {
     var id: Int64?
     var name: String
+    var email: String
+    var subject: String
  
     enum CodingKeys: String, CodingKey {
         case id
         case name
+        case email
+        case subject
       
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
+         try container.encode(email, forKey: .email)
+         try container.encode(subject, forKey: .subject)
       
         
     }
@@ -29,6 +35,8 @@ class StudentRepresentation: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(Int64.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
+        email = try container.decode(String.self, forKey: .email)
+        subject = try container.decode(String.self, forKey: .subject)
        
     }
 

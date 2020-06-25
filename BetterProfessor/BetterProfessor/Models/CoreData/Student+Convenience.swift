@@ -12,10 +12,14 @@ import CoreData
 extension Student {
     @discardableResult convenience init(id: Int64,
                                         name: String,
+                                        email: String,
+                                        subject: String,
                                         context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         self.init(context: context)
          self.id = id
         self.name = name
+        self.email = email
+        self.subject = subject
     }
 
     @discardableResult convenience init?(representation: StudentRepresentation,
@@ -26,6 +30,8 @@ extension Student {
                return nil
            }
         self.init(id: id,
-                  name: representation.name)
+                  name: representation.name,
+                  email: representation.email,
+                  subject: representation.subject)
     }
 }
