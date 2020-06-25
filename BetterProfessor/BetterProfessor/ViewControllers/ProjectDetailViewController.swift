@@ -104,7 +104,16 @@ class ProjectDetailViewController: UIViewController, MFMailComposeViewController
             let notes = notesTextView.text,
             let student = student else { return }
 
-        BackendController.shared.createProject(name: projectName, studentID: "\(student.id)", projectType: projectType, description: notes, completed: completedButton.isSelected) { result, error in
+        if let project = project {
+            updateProject(project: project, projectName: projectName, projectType: projectType, notes: notes, student: student)
+        } else {
+            createProject(projectName: projectName, projectType: projectType, notes: notes, student: student)
+        }
+    }
+
+    private func createProject(projectName: String, projectType: String, notes: String, student: Student) {
+        // swiftlint:disable:next all
+        BackendController.shared.createProject(name: projectName, studentID: "\(student.id)", projectType: projectType, dueDate: dueDatePicker.date, description: notes, completed: completedButton.isSelected) { result, error in
             if let error = error {
                 NSLog("Failed to create project with error: \(error)")
                 return
@@ -145,4 +154,25 @@ class ProjectDetailViewController: UIViewController, MFMailComposeViewController
         self.dismiss(animated: true, completion: nil)
     }
 
+
+    private func updateProject(project: Project, projectName: String, projectType: String, notes: String, student: Student) {
+        // swiftlint:disable:next all
+        BackendController.shared.updateProject(project: project, name: projectName, studentID: "\(student.id)", projectType: projectType, dueDate: dueDatePicker.date, description: notes, completed: completedButton.isSelected) { result, error in
+            if let error = error {
+                NSLog("Failed to update project with error: \(error)")
+                return
+            }
+
+            if result {
+                NSLog("Successfully updated project 🙌")
+            }
+
+            DispatchQueue.main.async {
+                self.delegate?.didCreateProject()
+            }
+        }
+
+        navigationController?.popViewController(animated: true)
+    }
 }
+

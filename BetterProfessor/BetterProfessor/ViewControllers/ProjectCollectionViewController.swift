@@ -40,7 +40,6 @@ class ProjectCollectionViewController: UICollectionViewController {
             }
 
             // We only want to display projects associated with the particular student so I filter it here
-            NSLog("\(projects)")
             for project in projects {
                 if project.studentName == student.name {
                     self.projects.append(project)
@@ -63,10 +62,12 @@ class ProjectCollectionViewController: UICollectionViewController {
 
             detailVC.project = self.projects[indexPath.row]
             detailVC.student = self.student
+            detailVC.delegate = self
         } else if segue.identifier == "AddProjectSegue" {
             guard let detailVC = segue.destination as? ProjectDetailViewController else { return }
 
             detailVC.student = self.student
+            detailVC.delegate = self
         }
     }
 
@@ -88,6 +89,7 @@ class ProjectCollectionViewController: UICollectionViewController {
 
 extension ProjectCollectionViewController: ProjectDetailDelegate {
     func didCreateProject() {
-        self.collectionView.reloadData()
+        projects = []
+        self.fetchProjects()
     }
 }
