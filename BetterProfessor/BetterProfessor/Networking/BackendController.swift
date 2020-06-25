@@ -418,10 +418,6 @@ class BackendController {
         }
     }
 
-    private func update(student: Student, with rep: StudentRepresentation) {
-        student.name = rep.name
-    }
-
     private func jsonFromDict(dictionary: Dictionary<String, Any>) throws -> Data? {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
@@ -435,40 +431,20 @@ class BackendController {
     private func jsonFromUsername(username: String) throws -> Data? {
         var dic: [String: String] = [:]
         dic["username"] = username
+        do {
+                   let jsonData = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
+                   return jsonData
+               } catch {
+                   NSLog("Error Creating JSON From username dictionary. \(error)")
+                   throw error
+               }
+    }
 
 private func update(student: Student, with rep: StudentRepresentation) {
     student.name = rep.name
     student.email = rep.email
     student.subject = rep.subject
 }
-
-func fetchAllProjects(completion: @escaping ([Project]?, Error?) -> Void) {
-    guard let token = token,
-        let userID = self.userID else { return }
-    let projectURL = baseURL.appendingPathComponent("/api/users/teacher").appendingPathComponent("\(userID)").appendingPathComponent("/students/projects")
-
-    var request = URLRequest(url: projectURL)
-    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.setValue(token.token, forHTTPHeaderField: "authorization")
-    
-    dataLoader?.loadData(from: request, completion: { data, _, error in
-        if let error = error {
-            return completion(nil, error)
-        }
-        
-        guard let data = data else {
-            return completion(nil, ProfessorError.badData("No data was returned"))
-        }
-        
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
-            return jsonData
-        } catch {
-            NSLog("Error Creating JSON From username dictionary. \(error)")
-            throw error
-        }
-
-    }
 
     private enum ProfessorError: Error {
         case noAuth(String)
