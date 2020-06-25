@@ -147,7 +147,7 @@
                                             <outlet property="emailLabel" destination="bLr-Kn-bw2" id="luT-0I-V2H"/>
                                             <outlet property="nameLabel" destination="aVA-I4-m5a" id="1Wm-gl-rsQ"/>
                                             <outlet property="photoImage" destination="xrE-aw-khs" id="v3p-Qb-l8g"/>
-                                            <outlet property="subectLabel" destination="WZb-qg-Hpf" id="Lfl-ns-oaM"/>
+                                            <outlet property="subectLabel" destination="WZb-qg-Hpf" id="tnh-2a-5OV"/>
                                             <segue destination="0H8-Rh-lBH" kind="show" identifier="ProjectCollectionSegue" id="W4u-HI-ROO"/>
                                         </connections>
                                     </tableViewCell>
