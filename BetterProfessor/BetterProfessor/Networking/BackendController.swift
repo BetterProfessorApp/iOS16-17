@@ -401,49 +401,6 @@ class BackendController {
         
         }
 
-
-    private func populateCache() {
-        // First get all existing students saved to coreData and store them in the Cache
-        let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
-        // Do this synchronously in the background queue, so that it can't be used until cache is fully populated
-        bgContext.performAndWait {
-            var fetchResult: [Student] = []
-            do {
-                fetchResult = try bgContext.fetch(fetchRequest)
-            } catch {
-                NSLog("Couldn't fetch existing core data student: \(error)")
-            }
-            for student in fetchResult {
-                cache.cache(value: student, for: student.id)
-            }
-        }
-    }
-
-    private func update(student: Student, with rep: StudentRepresentation) {
-        student.name = rep.name
-    }
-
-    func fetchAllProjects(completion: @escaping ([Project]?, Error?) -> Void) {
-        guard let token = token,
-            let userID = self.userID else { return }
-
-        let projectURL = baseURL.appendingPathComponent("/api/users/teacher").appendingPathComponent("\(userID)").appendingPathComponent("/students/projects")
-
-        var request = URLRequest(url: projectURL)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue(token.token, forHTTPHeaderField: "authorization")
-
-        dataLoader?.loadData(from: request, completion: { data, _, error in
-            if let error = error {
-                NSLog("Error in getting data: \(error)")
-                completion(.failure(.noData))
-            }
-            
-            
-            completion(.success(true))
-        }.resume()
-    }
-
 private func populateCache() {
     // First get all existing students saved to coreData and store them in the Cache
     let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
@@ -463,14 +420,15 @@ private func populateCache() {
 
 private func update(student: Student, with rep: StudentRepresentation) {
     student.name = rep.name
+    student.email = rep.email
+    student.subject = rep.subject
 }
 
 func fetchAllProjects(completion: @escaping ([Project]?, Error?) -> Void) {
     guard let token = token,
         let userID = self.userID else { return }
-    
     let projectURL = baseURL.appendingPathComponent("/api/users/teacher").appendingPathComponent("\(userID)").appendingPathComponent("/students/projects")
-    
+
     var request = URLRequest(url: projectURL)
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue(token.token, forHTTPHeaderField: "authorization")
