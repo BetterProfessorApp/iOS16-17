@@ -12,7 +12,7 @@ struct Project: Codable {
     let projectID: Int
     let projectName: String
     let dueDate: Date
-    let studentID: String
+    let studentId: String
     let studentName: String
     let projectType: String
     let description: String
@@ -22,7 +22,7 @@ struct Project: Codable {
         case projectID = "id"
         case projectName
         case dueDate
-        case studentID
+        case studentId
         case studentName = "name"
         case projectType
         case description = "desc"
@@ -34,11 +34,15 @@ struct Project: Codable {
 
         self.projectID = try container.decode(Int.self, forKey: .projectID)
         self.projectName = try container.decode(String.self, forKey: .projectName)
-        self.studentID = try container.decode(String.self, forKey: .studentID)
+        self.studentId = try container.decode(String.self, forKey: .studentId)
         self.studentName = try container.decode(String.self, forKey: .studentName)
         self.projectType = try container.decode(String.self, forKey: .projectType)
         self.description = try container.decode(String.self, forKey: .description)
-        self.dueDate = try container.decode(Date.self, forKey: .dueDate)
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        let dateString = try container.decode(String.self, forKey: .dueDate)
+        self.dueDate = formatter.date(from: dateString) ?? Date()
 
         let completedInt = try container.decode(Int.self, forKey: .completed)
         if completedInt == 0 {

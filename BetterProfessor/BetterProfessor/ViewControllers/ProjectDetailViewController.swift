@@ -10,21 +10,35 @@ import UIKit
 
 class ProjectDetailViewController: UIViewController {
 
+    @IBOutlet var projectNameTextField: UITextField!
+    @IBOutlet var projectTypeTextField: UITextField!
+    @IBOutlet var completedButton: UIButton!
+    @IBOutlet var dueDatePicker: UIDatePicker!
+    @IBOutlet var notesTextView: UITextView!
+
+    var project: Project?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        if let _ = project {
+            self.updateViews()
+        }
     }
-    
 
-    /*
-    // MARK: - Navigation
+    private func updateViews() {
+        guard let project = project else { return }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        projectNameTextField.text = project.projectName
+        projectTypeTextField.text = project.projectType
+        dueDatePicker.date = project.dueDate
+        notesTextView.text = project.description
+
+        switch project.completed {
+        case true:
+            completedButton.isSelected = true
+        case false:
+            completedButton.isSelected = false
+        }
     }
-    */
-
 }

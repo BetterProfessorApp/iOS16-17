@@ -19,7 +19,7 @@ class StudentTableViewController: UIViewController {
         let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
         fetchRequest.predicate = predicate
         let context = CoreDataStack.shared.mainContext
-//        context.reset()
+        //        context.reset()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
@@ -48,7 +48,7 @@ class StudentTableViewController: UIViewController {
         tableView.layer.borderWidth = 1
         studentFetchedResultsController.delegate = self
         fetchStudents()
-//        fetchStudents()
+        //        fetchStudents()
     }
     @IBAction func signOutTapped(_ sender: Any) {
         BackendController.shared.signOut()
@@ -56,30 +56,30 @@ class StudentTableViewController: UIViewController {
 
     private func fetchStudents() {
         BackendController.shared.syncStudent { error in
-                      DispatchQueue.main.async {
-                          if let error = error {
-                              NSLog("Error trying to fetch student: \(error)")
-                          } else {
-                              self.tableView.reloadData()
-                          }
+            DispatchQueue.main.async {
+                if let error = error {
+                    NSLog("Error trying to fetch student: \(error)")
+                } else {
+                    self.tableView.reloadData()
+                }
             }
-                  }
+        }
     }
 
     private func fetchStudents1() {
-           BackendController.shared.forceLoadInstructorStudents { result, error in
-               if let error = error {
-                   NSLog("ERROR: \(error)")
-                   return
-               }
+        BackendController.shared.forceLoadInstructorStudents { result, error in
+            if let error = error {
+                NSLog("ERROR: \(error)")
+                return
+            }
 
-               if result {
-                   DispatchQueue.main.async {
-                       self.tableView.reloadData()
-                   }
-               }
-           }
-       }
+            if result {
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
 
     private func createStudent() {
         let alert = UIAlertController(title: "Create Student", message: nil, preferredStyle: .alert)
@@ -129,17 +129,21 @@ class StudentTableViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-          switch segue.identifier {
+        switch segue.identifier {
 
-             case "addPhotoSegue":
-
-                 guard let destinationVC = segue.destination as? PhotoDetailViewController,
-                    let indexPath = tableView.indexPathsForSelectedRows?.first else { return }
-                 destinationVC.modalPresentationStyle = .fullScreen
-                 destinationVC.photoController = photoController
-             default:
-                 break
-             }
+        case "addPhotoSegue":
+            guard let destinationVC = segue.destination as? PhotoDetailViewController,
+                let indexPath = tableView.indexPathsForSelectedRows?.first else { return }
+            destinationVC.modalPresentationStyle = .fullScreen
+            destinationVC.photoController = photoController
+        case "ProjectCollectionSegue":
+            guard let collectionVC = segue.destination as? ProjectCollectionViewController,
+                let indexPath = tableView.indexPathForSelectedRow else { return }
+            let student = studentFetchedResultsController.object(at: indexPath)
+            collectionVC.studentName = student.name
+        default:
+            break
+        }
     }
 }
 
@@ -154,7 +158,7 @@ extension StudentTableViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-                return studentFetchedResultsController.sections?[section].numberOfObjects ?? 0
+        return studentFetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -212,14 +216,14 @@ extension StudentTableViewController: NSFetchedResultsControllerDelegate {
     }
 }
 extension StudentTableViewController: UISearchBarDelegate, UISearchDisplayDelegate {
-  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    if !searchText.isEmpty {
-      var predicate: NSPredicate = NSPredicate()
-      predicate = NSPredicate(format: "name contains[c] '\(searchText)'")
-      setUpFetchResultController(with: predicate)
-    } else {
-      setUpFetchResultController()
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if !searchText.isEmpty {
+            var predicate: NSPredicate = NSPredicate()
+            predicate = NSPredicate(format: "name contains[c] '\(searchText)'")
+            setUpFetchResultController(with: predicate)
+        } else {
+            setUpFetchResultController()
+        }
+        tableView.reloadData()
     }
-    tableView.reloadData()
-  }
 }

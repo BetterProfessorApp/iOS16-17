@@ -134,8 +134,8 @@
 				2B13283824A2A65800D78C4A /* StudentTableViewController.swift */,
 				3F27732C24A2D91200195192 /* StudentTableViewCell.swift */,
 				3F27732E24A317A600195192 /* UIImage+Scale.swift */,
-				2B13284D24A41C1500D78C4A /* ProjectCollectionViewController.swift */,
 				2B13284B24A4083000D78C4A /* ProjectCollectionViewCell.swift */,
+				2B13284D24A41C1500D78C4A /* ProjectCollectionViewController.swift */,
 				2B13284F24A47CD000D78C4A /* ProjectDetailViewController.swift */,
 			);
 			path = ViewControllers;

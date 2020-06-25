@@ -12,11 +12,13 @@ class ProjectCollectionViewController: UICollectionViewController {
 
     private let reuseIdentifier = "ProjectCell"
 
-    private var studentName: String?
+    var studentName: String?
     private var projects = [Project]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        fetchProjects()
     }
 
     private func updateViews() {
@@ -38,6 +40,7 @@ class ProjectCollectionViewController: UICollectionViewController {
             }
 
             // We only want to display projects associated with the particular student so I filter it here
+            NSLog("\(projects)")
             for project in projects {
                 if project.studentName == studentName {
                     self.projects.append(project)
@@ -52,10 +55,16 @@ class ProjectCollectionViewController: UICollectionViewController {
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ViewProjectSegue" {
+            guard let detailVC = segue.destination as? ProjectDetailViewController,
+                let cell = sender as? ProjectCollectionViewCell,
+                let indexPath = collectionView.indexPath(for: cell) else { return }
+
+            detailVC.project = self.projects[indexPath.row]
+        } else if segue.identifier == "AddProjectSegue" {
+            
+        }
     }
 
     // MARK: UICollectionViewDataSource
