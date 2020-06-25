@@ -343,10 +343,13 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AwA-2p-2S4">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AwA-2p-2S4">
                                                 <rect key="frame" x="104.5" y="0.0" width="269.5" height="22"/>
                                                 <state key="normal" image="square" catalog="system"/>
                                                 <state key="selected" image="checkmark.square.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="toggleEmailState:" destination="Pjq-Nt-LdQ" eventType="touchUpInside" id="Ovv-nl-lYW"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>

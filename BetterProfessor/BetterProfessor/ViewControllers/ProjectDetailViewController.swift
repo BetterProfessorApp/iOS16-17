@@ -96,6 +96,10 @@ class ProjectDetailViewController: UIViewController, MFMailComposeViewController
         completedButton.isSelected.toggle()
     }
 
+    @IBAction func toggleEmailState(_ sender: Any) {
+        sendEmailButton.isSelected.toggle()
+    }
+
     @IBAction func saveProject(_ sender: Any) {
         guard let projectName = projectNameTextField.text,
             !projectName.isEmpty,
