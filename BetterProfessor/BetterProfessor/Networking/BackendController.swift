@@ -387,147 +387,144 @@ class BackendController {
         var request = URLRequest(url: requestURL.url!)
         request.httpMethod = Method.delete.rawValue
         request.setValue(token.token, forHTTPHeaderField: "Authorization")
-
-          URLSession.shared.dataTask(with: request) { data, response, error in
-              if let error = error {
-                  NSLog("Error in getting data: \(error)")
-                  completion(.failure(.noData))
-              }
-
-
-              completion(.success(true))
-          }.resume()
-      }
-
-        })
-    }
-
-    private func populateCache() {
-        // First get all existing students saved to coreData and store them in the Cache
-        let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
-        // Do this synchronously in the background queue, so that it can't be used until cache is fully populated
-        bgContext.performAndWait {
-            var fetchResult: [Student] = []
-            do {
-                fetchResult = try bgContext.fetch(fetchRequest)
-            } catch {
-                NSLog("Couldn't fetch existing core data student: \(error)")
-            }
-            for student in fetchResult {
-                cache.cache(value: student, for: student.id)
-            }
-        }
-    }
-
-    private func update(student: Student, with rep: StudentRepresentation) {
-        student.name = rep.name
-    }
-
-    func fetchAllProjects(completion: @escaping ([Project]?, Error?) -> Void) {
-        guard let token = token,
-            let userID = self.userID else { return }
-
-        let projectURL = baseURL.appendingPathComponent("/api/users/teacher").appendingPathComponent("\(userID)").appendingPathComponent("/students/projects")
-
-        var request = URLRequest(url: projectURL)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue(token.token, forHTTPHeaderField: "authorization")
-
-        dataLoader?.loadData(from: request, completion: { data, _, error in
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                return completion(nil, error)
+                NSLog("Error in getting data: \(error)")
+                completion(.failure(.noData))
             }
-
-            guard let data = data else {
-                return completion(nil, ProfessorError.badData("No data was returned"))
-            }
-
-            do {
-                let projects = try self.decoder.decode([Project].self, from: data)
-                return completion(projects, nil)
-            } catch {
-                return completion(nil, ProfessorError.badData("Could not decode data"))
-            }
-        })
+            
+            
+            completion(.success(true))
+        }.resume()
     }
 
-    func createProject(name: String, studentID: String, projectType: String, description: String, completed: Bool, completion: @escaping (Bool, Error?) -> Void) {
-        guard let token = token,
-            let userID = self.userID else { return }
-
-        let projectURL = baseURL.appendingPathComponent("/api/users/teacher").appendingPathComponent("\(userID)").appendingPathComponent("/students/projects")
-
-        var request = URLRequest(url: projectURL)
-        request.httpMethod = Method.post.rawValue
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue(token.token, forHTTPHeaderField: "authorization")
-
+private func populateCache() {
+    // First get all existing students saved to coreData and store them in the Cache
+    let fetchRequest: NSFetchRequest<Student> = Student.fetchRequest()
+    // Do this synchronously in the background queue, so that it can't be used until cache is fully populated
+    bgContext.performAndWait {
+        var fetchResult: [Student] = []
         do {
-            let dictionary: [String: Any] = ["name": name,
-                                             "student_id": studentID,
-                                             "project_type": projectType,
-                                             "desc": description,
-                                             "completed": completed]
-            let jsonBody = try jsonFromDict(dictionary: dictionary)
-            request.httpBody = jsonBody
+            fetchResult = try bgContext.fetch(fetchRequest)
         } catch {
-            completion(false, error)
+            NSLog("Couldn't fetch existing core data student: \(error)")
         }
-
-        dataLoader?.loadData(from: request, completion: { _, _, error in
-            if let error = error {
-                return completion(false, error)
-            }
-
-            completion(true, nil)
-        })
-    }
-
-    private func jsonFromDict(dictionary: Dictionary<String, Any>) throws -> Data? {
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
-            return jsonData
-        } catch {
-            NSLog("Error Creating JSON from Dictionary. \(error)")
-            throw error
+        for student in fetchResult {
+            cache.cache(value: student, for: student.id)
         }
     }
+}
 
-    private func jsonFromUsername(username: String) throws -> Data? {
-        var dic: [String: String] = [:]
-        dic["username"] = username
+private func update(student: Student, with rep: StudentRepresentation) {
+    student.name = rep.name
+}
 
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
-            return jsonData
-        } catch {
-            NSLog("Error Creating JSON From username dictionary. \(error)")
-            throw error
+func fetchAllProjects(completion: @escaping ([Project]?, Error?) -> Void) {
+    guard let token = token,
+        let userID = self.userID else { return }
+    
+    let projectURL = baseURL.appendingPathComponent("/api/users/teacher").appendingPathComponent("\(userID)").appendingPathComponent("/students/projects")
+    
+    var request = URLRequest(url: projectURL)
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.setValue(token.token, forHTTPHeaderField: "authorization")
+    
+    dataLoader?.loadData(from: request, completion: { data, _, error in
+        if let error = error {
+            return completion(nil, error)
         }
+        
+        guard let data = data else {
+            return completion(nil, ProfessorError.badData("No data was returned"))
+        }
+        
+        do {
+            let projects = try self.decoder.decode([Project].self, from: data)
+            return completion(projects, nil)
+        } catch {
+            return completion(nil, ProfessorError.badData("Could not decode data"))
+        }
+    })
+}
 
+func createProject(name: String, studentID: String, projectType: String, description: String, completed: Bool, completion: @escaping (Bool, Error?) -> Void) {
+    guard let token = token,
+        let userID = self.userID else { return }
+    
+    let projectURL = baseURL.appendingPathComponent("/api/users/teacher").appendingPathComponent("\(userID)").appendingPathComponent("/students/projects")
+    
+    var request = URLRequest(url: projectURL)
+    request.httpMethod = Method.post.rawValue
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.setValue(token.token, forHTTPHeaderField: "authorization")
+    
+    do {
+        let dictionary: [String: Any] = ["name": name,
+                                         "student_id": studentID,
+                                         "project_type": projectType,
+                                         "desc": description,
+                                         "completed": completed]
+        let jsonBody = try jsonFromDict(dictionary: dictionary)
+        request.httpBody = jsonBody
+    } catch {
+        completion(false, error)
     }
+    
+    dataLoader?.loadData(from: request, completion: { _, _, error in
+        if let error = error {
+            return completion(false, error)
+        }
+        
+        completion(true, nil)
+    })
+}
 
-    private enum ProfessorError: Error {
-        case noAuth(String)
-        case badData(String)
+private func jsonFromDict(dictionary: Dictionary<String, Any>) throws -> Data? {
+    do {
+        let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
+        return jsonData
+    } catch {
+        NSLog("Error Creating JSON from Dictionary. \(error)")
+        throw error
     }
+}
 
-    private enum Method: String {
-        case get = "GET"
-        case post = "POST"
-        case put = "PUT"
-        case delete = "DELETE"
+private func jsonFromUsername(username: String) throws -> Data? {
+    var dic: [String: String] = [:]
+    dic["username"] = username
+    
+    do {
+        let jsonData = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
+        return jsonData
+    } catch {
+        NSLog("Error Creating JSON From username dictionary. \(error)")
+        throw error
     }
+    
+}
 
-    private enum EndPoints: String {
-        case register = "api/auth/register"
-        case login = "api/auth/login"
-        case students = "/api/users/teacher/"
-        case delete =  "/teacher/:id/students/"
-    }
+private enum ProfessorError: Error {
+    case noAuth(String)
+    case badData(String)
+}
 
-    func injectToken(_ token: String) {
-        let token = Token(token: token)
-        self.token = token
-    }
+private enum Method: String {
+    case get = "GET"
+    case post = "POST"
+    case put = "PUT"
+    case delete = "DELETE"
+}
+
+private enum EndPoints: String {
+    case register = "api/auth/register"
+    case login = "api/auth/login"
+    case students = "/api/users/teacher/"
+    case delete =  "/teacher/:id/students/"
+}
+
+func injectToken(_ token: String) {
+    let token = Token(token: token)
+    self.token = token
+}
 }

@@ -16,7 +16,7 @@ extension Student {
                                         subject: String,
                                         context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         self.init(context: context)
-         self.id = id
+        self.id = id
         self.name = name
         self.email = email
         self.subject = subject
