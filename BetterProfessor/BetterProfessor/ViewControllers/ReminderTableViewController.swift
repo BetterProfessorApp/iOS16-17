@@ -55,7 +55,7 @@ extension Date {
 
 extension String {
     static var finishedMsg = "Done"
-    static var appTitle = "Count🔻"
+    static var appTitle = "Better Professor"
     static var noTag = "no tag"
 }
 
