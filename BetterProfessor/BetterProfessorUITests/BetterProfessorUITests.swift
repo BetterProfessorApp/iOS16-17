@@ -2,7 +2,7 @@
 //  BetterProfessorUITests.swift
 //  BetterProfessorUITests
 //
-//  Created by Stephanie Ballard on 6/24/20.
+//  Created by Hunter Oppel on 6/25/20.
 //  Copyright © 2020 Bhawnish Kumar. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ import XCTest
 class BetterProfessorUITests: XCTestCase {
 
     let app = XCUIApplication()
-    
+
     override func setUp() {
         super.setUp()
         app.launchArguments = ["UITesting"]
@@ -39,12 +39,15 @@ class BetterProfessorUITests: XCTestCase {
         app.buttons["Log In"].tap()
         app.textFields["Username:"].tap()
         app.textFields["Username:"].typeText("Stephanie")
+        app.secureTextFields["Password:"].tap()
+        app.secureTextFields["Password:"].typeText("test1234")
         XCTAssertNotNil(app.textFields)
     }
     func testNewUserCanSignUp() {
         let usernameTextField = app.textFields["Username:"]
         usernameTextField.tap()
         app.secureTextFields["Password:"].tap()
+        app.secureTextFields["Password:"].typeText("test1234")
         app.secureTextFields["Confirm Password:"].tap()
         app.textFields["Email:"].tap()
         app.textFields["Department:"].tap()
