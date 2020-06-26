@@ -14,29 +14,37 @@ class ProjectCollectionViewCell: UICollectionViewCell {
             updateViews()
         }
     }
-
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.dateFormat = "MMM d, yyyy"
+        return formatter
+    }()
+    
     @IBOutlet var projectNameLabel: UILabel!
     @IBOutlet var projectTypeLabel: UILabel!
     @IBOutlet var completedButton: UIButton!
-
+    @IBOutlet var dueDateLabel: UILabel!
+    
     private func updateViews() {
         guard let project = project else { return }
-
+        let dateString = dateFormatter.string(from: project.dueDate)
         projectNameLabel.text = project.projectName
         projectTypeLabel.text = project.projectType
-
+        dueDateLabel.text = dateString
+        
         switch project.completed {
         case true:
             completedButton.isSelected = true
         case false:
             completedButton.isSelected = false
         }
-
+        
         self.contentView.layer.cornerRadius = 2.0
         self.contentView.layer.borderWidth = 1.0
         self.contentView.layer.borderColor = UIColor.clear.cgColor
         self.contentView.layer.masksToBounds = true
-
+        
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 2.0)
         self.layer.shadowRadius = 2.0
