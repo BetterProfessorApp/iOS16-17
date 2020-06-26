@@ -76,8 +76,11 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uUe-Ej-Irg">
-                                <rect key="frame" x="145" y="542" width="124" height="30"/>
+                                <rect key="frame" x="145" y="542" width="124" height="40"/>
                                 <color key="backgroundColor" red="0.25309870925564742" green="0.50465070171578874" blue="0.99079887027817259" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="NY3-Nd-EAT"/>
+                                </constraints>
                                 <state key="normal" title="Log In/Sign Up">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>

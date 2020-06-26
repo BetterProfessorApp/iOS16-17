@@ -73,15 +73,16 @@ class ReminderDetailViewController: UIViewController, UITextViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // So textFieldShouldReturn will fire
 
+        // So textFieldShouldReturn will fire
+        saveButton.layer.cornerRadius = 12 
         studentNameTextField.delegate = self
         reminderTextView.delegate = self
-        
         updateViews()
         reminderTextView.layer.borderWidth = 1
-        reminderTextView.layer.borderColor = UIColor.blue.cgColor
+        reminderTextView.layer.borderColor = UIColor.lightGray.cgColor
+        studentNameTextField.layer.cornerRadius = 12
+        reminderTextView.layer.cornerRadius = 12
 
     }
 
@@ -107,7 +108,6 @@ class ReminderDetailViewController: UIViewController, UITextViewDelegate {
         default:
             break
         }
-        
         // .date returns the new date with the current time (GMT)
         var timerDate = dateTimePicker.date
         if timerType == .time {
@@ -157,7 +157,7 @@ class ReminderDetailViewController: UIViewController, UITextViewDelegate {
         let timerType = TimerType(rawValue: segmentedControl.selectedSegmentIndex)
         return timerType ?? .both
     }
-    
+
     /*
      // MARK: - Navigation
      
