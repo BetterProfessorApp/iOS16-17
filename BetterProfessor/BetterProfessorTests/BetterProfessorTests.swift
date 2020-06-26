@@ -2,7 +2,7 @@
 //  BetterProfessorTests.swift
 //  BetterProfessorTests
 //
-//  Created by Hunter Oppel on 6/24/20.
+//  Created by Hunter Oppel on 6/25/20.
 //  Copyright © 2020 Bhawnish Kumar. All rights reserved.
 //
 
@@ -46,7 +46,7 @@ class BetterProfessorUITests: XCTestCase {
         })
         wait(for: [expectation], timeout: timeout)
     }
-    
+
     func testSingIn() {
         let expectation = self.expectation(description: "User can sign in")
         BackendController.shared.signIn(username: "Stephanie", password: "password", completion: { result in
@@ -55,9 +55,9 @@ class BetterProfessorUITests: XCTestCase {
         })
         wait(for: [expectation], timeout: timeout)
     }
-    
+
     func testCreateStudent() {
-        
+
         let expectation1 = self.expectation(description: "User can sign in")
         BackendController.shared.signIn(username: "Stephanie", password: "password", completion: { _ in
             expectation1.fulfill()
@@ -76,7 +76,7 @@ class BetterProfessorUITests: XCTestCase {
             expectation1.fulfill()
             })
             wait(for: [expectation1], timeout: timeout)
-        
+
         let expectation2 = self.expectation(description: "User can sign out")
         BackendController.shared.signOut()
         expectation2.fulfill()
@@ -88,7 +88,7 @@ class BetterProfessorUITests: XCTestCase {
             expectation1.fulfill()
         })
         wait(for: [expectation1], timeout: timeout)
-        
+
         let expectation2 = self.expectation(description: "Fetched all students")
         try BackendController.shared.fetchAllStudents { students, error in
             XCTAssertNil(error)
@@ -97,7 +97,7 @@ class BetterProfessorUITests: XCTestCase {
         }
         wait(for: [expectation2], timeout: timeout)
     }
-    
+
     func testEncoding() {
         let url = URL(string: "https://betterprofessoruni.herokuapp.com")!
         let expectation = self.expectation(description: "Data encodes from backend")
@@ -116,7 +116,7 @@ class BetterProfessorUITests: XCTestCase {
         expectation.fulfill()
         waitForExpectations(timeout: timeout)
     }
-    
+
     func testDecoding() {
         let url = URL(string: "https://betterprofessoruni.herokuapp.com")!
         let expectation = self.expectation(description: "Data decodes from the backend")
@@ -137,9 +137,9 @@ class BetterProfessorUITests: XCTestCase {
         expectation.fulfill()
         waitForExpectations(timeout: timeout)
     }
-    
+
     func testSpeedOfTypicalRequestsMoreAccurately() {
-        
+
         measureMetrics([.wallClockTime], automaticallyStartMeasuring: false) {
             let expectation = self.expectation(description: "Wait for results")
             let controller = BackendController(dataLoader: URLSession(configuration: .ephemeral))
