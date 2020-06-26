@@ -22,8 +22,14 @@
 		3F27732924A29E3000195192 /* StudenRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F27732824A29E3000195192 /* StudenRepresentation.swift */; };
 		3F27732B24A2CBD100195192 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F27732A24A2CBD100195192 /* Cache.swift */; };
 		3F27732D24A2D91200195192 /* StudentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F27732C24A2D91200195192 /* StudentTableViewCell.swift */; };
-		3F27732F24A317A600195192 /* UIImage+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F27732E24A317A600195192 /* UIImage+Scale.swift */; };
 		3F38FB8E24A51FDA00A4AA6F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F38FB8D24A51FDA00A4AA6F /* MessageUI.framework */; };
+		3F38FB9024A56CBC00A4AA6F /* ReminderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F38FB8F24A56CBC00A4AA6F /* ReminderDetailViewController.swift */; };
+		3F38FB9224A56F3800A4AA6F /* ReminderPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F38FB9124A56F3800A4AA6F /* ReminderPicker.swift */; };
+		3F38FB9424A5737000A4AA6F /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F38FB9324A5737000A4AA6F /* Timer.swift */; };
+		3F38FB9624A573B500A4AA6F /* TimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F38FB9524A573B500A4AA6F /* TimerController.swift */; };
+		3F38FB9824A5747F00A4AA6F /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F38FB9724A5747F00A4AA6F /* NotificationController.swift */; };
+		3F38FB9A24A5755000A4AA6F /* ReminderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F38FB9924A5755000A4AA6F /* ReminderTableViewController.swift */; };
+		3F38FB9C24A575DC00A4AA6F /* RemindersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F38FB9B24A575DC00A4AA6F /* RemindersTableViewCell.swift */; };
 		3F5B512624A115E4007C0563 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B512524A115E4007C0563 /* AppDelegate.swift */; };
 		3F5B512824A115E4007C0563 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B512724A115E4007C0563 /* SceneDelegate.swift */; };
 		3F5B512D24A115E4007C0563 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F5B512B24A115E4007C0563 /* Main.storyboard */; };
@@ -51,8 +57,14 @@
 		3F27732824A29E3000195192 /* StudenRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudenRepresentation.swift; sourceTree = "<group>"; };
 		3F27732A24A2CBD100195192 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		3F27732C24A2D91200195192 /* StudentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTableViewCell.swift; sourceTree = "<group>"; };
-		3F27732E24A317A600195192 /* UIImage+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scale.swift"; sourceTree = "<group>"; };
 		3F38FB8D24A51FDA00A4AA6F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		3F38FB8F24A56CBC00A4AA6F /* ReminderDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDetailViewController.swift; sourceTree = "<group>"; };
+		3F38FB9124A56F3800A4AA6F /* ReminderPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPicker.swift; sourceTree = "<group>"; };
+		3F38FB9324A5737000A4AA6F /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		3F38FB9524A573B500A4AA6F /* TimerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerController.swift; sourceTree = "<group>"; };
+		3F38FB9724A5747F00A4AA6F /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		3F38FB9924A5755000A4AA6F /* ReminderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderTableViewController.swift; sourceTree = "<group>"; };
+		3F38FB9B24A575DC00A4AA6F /* RemindersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersTableViewCell.swift; sourceTree = "<group>"; };
 		3F5B512224A115E4007C0563 /* BetterProfessor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterProfessor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F5B512524A115E4007C0563 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F5B512724A115E4007C0563 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +110,7 @@
 				3F5B513D24A1553E007C0563 /* Token.swift */,
 				3F27732824A29E3000195192 /* StudenRepresentation.swift */,
 				2B13284824A3E94100D78C4A /* Project.swift */,
+				3F38FB9324A5737000A4AA6F /* Timer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -108,6 +121,8 @@
 				3F5B513F24A155D8007C0563 /* DataLoader.swift */,
 				3F5B513B24A15471007C0563 /* BackendController.swift */,
 				3F27732A24A2CBD100195192 /* Cache.swift */,
+				3F38FB9524A573B500A4AA6F /* TimerController.swift */,
+				3F38FB9724A5747F00A4AA6F /* NotificationController.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -127,10 +142,13 @@
 				2B13283024A26A0700D78C4A /* LogInSignUpViewController.swift */,
 				2B13283824A2A65800D78C4A /* StudentTableViewController.swift */,
 				3F27732C24A2D91200195192 /* StudentTableViewCell.swift */,
-				3F27732E24A317A600195192 /* UIImage+Scale.swift */,
 				2B13284B24A4083000D78C4A /* ProjectCollectionViewCell.swift */,
 				2B13284D24A41C1500D78C4A /* ProjectCollectionViewController.swift */,
 				2B13284F24A47CD000D78C4A /* ProjectDetailViewController.swift */,
+				3F38FB8F24A56CBC00A4AA6F /* ReminderDetailViewController.swift */,
+				3F38FB9124A56F3800A4AA6F /* ReminderPicker.swift */,
+				3F38FB9924A5755000A4AA6F /* ReminderTableViewController.swift */,
+				3F38FB9B24A575DC00A4AA6F /* RemindersTableViewCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -284,20 +302,26 @@
 				2B13285124A5067C00D78C4A /* BetterProfessor.xcdatamodeld in Sources */,
 				2B13284924A3E94100D78C4A /* Project.swift in Sources */,
 				3F5B513E24A1553E007C0563 /* Token.swift in Sources */,
+				3F38FB9C24A575DC00A4AA6F /* RemindersTableViewCell.swift in Sources */,
 				2B13285024A47CD000D78C4A /* ProjectDetailViewController.swift in Sources */,
 				2B13283124A26A0700D78C4A /* LogInSignUpViewController.swift in Sources */,
-				3F27732F24A317A600195192 /* UIImage+Scale.swift in Sources */,
 				3F5B514024A155D8007C0563 /* DataLoader.swift in Sources */,
 				3F5B512824A115E4007C0563 /* SceneDelegate.swift in Sources */,
 				2B13284C24A4083000D78C4A /* ProjectCollectionViewCell.swift in Sources */,
 				2B13283924A2A65800D78C4A /* StudentTableViewController.swift in Sources */,
 				3F27732524A29A7500195192 /* Reminder+Convenience.swift in Sources */,
+				3F38FB9424A5737000A4AA6F /* Timer.swift in Sources */,
 				3F5B513C24A15471007C0563 /* BackendController.swift in Sources */,
 				3F5B513A24A150A7007C0563 /* User.swift in Sources */,
+				3F38FB9224A56F3800A4AA6F /* ReminderPicker.swift in Sources */,
 				2B13284E24A41C1500D78C4A /* ProjectCollectionViewController.swift in Sources */,
 				3F27732424A29A7300195192 /* FetchedResultsController.swift in Sources */,
 				3F27732324A29A3100195192 /* CoreDataStack.swift in Sources */,
+				3F38FB9824A5747F00A4AA6F /* NotificationController.swift in Sources */,
+				3F38FB9A24A5755000A4AA6F /* ReminderTableViewController.swift in Sources */,
+				3F38FB9624A573B500A4AA6F /* TimerController.swift in Sources */,
 				3F27732D24A2D91200195192 /* StudentTableViewCell.swift in Sources */,
+				3F38FB9024A56CBC00A4AA6F /* ReminderDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

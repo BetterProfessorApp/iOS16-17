@@ -138,7 +138,8 @@ class ProjectDetailViewController: UIViewController, MFMailComposeViewController
             if MFMailComposeViewController.canSendMail() {
                      let mail: MFMailComposeViewController = MFMailComposeViewController()
                      mail.mailComposeDelegate = self
-                     mail.setToRecipients(nil)
+            
+                mail.setToRecipients(nil)
                 mail.setSubject("Your \(projectName) is due")
                 mail.setMessageBody("\(notes)", isHTML: false)
 
