@@ -135,6 +135,12 @@ class StudentTableViewController: UIViewController {
                 let indexPath = tableView.indexPathForSelectedRow else { return }
             let student = studentFetchedResultsController.object(at: indexPath)
             collectionVC.student = student
+        case "addReminderSegue":
+           guard let collectionVC = segue.destination as? ReminderDetailViewController,
+                           let indexPath = tableView.indexPathForSelectedRow else { return }
+                       let student = studentFetchedResultsController.object(at: indexPath)
+                       collectionVC.student = student
+            
         default:
             break
         }
